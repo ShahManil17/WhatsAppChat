@@ -1,0 +1,14 @@
+C:\Manil Shah\Work\WhatsAppChat\WhatsAppChat.Data\bin\Debug\net8.0\WhatsAppChat.Data.deps.json
+C:\Manil Shah\Work\WhatsAppChat\WhatsAppChat.Data\bin\Debug\net8.0\WhatsAppChat.Data.runtimeconfig.json
+C:\Manil Shah\Work\WhatsAppChat\WhatsAppChat.Data\bin\Debug\net8.0\WhatsAppChat.Data.dll
+C:\Manil Shah\Work\WhatsAppChat\WhatsAppChat.Data\bin\Debug\net8.0\WhatsAppChat.Data.pdb
+C:\Manil Shah\Work\WhatsAppChat\WhatsAppChat.Data\obj\Debug\net8.0\WhatsAppChat.Data.csproj.AssemblyReference.cache
+C:\Manil Shah\Work\WhatsAppChat\WhatsAppChat.Data\obj\Debug\net8.0\WhatsAppChat.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Manil Shah\Work\WhatsAppChat\WhatsAppChat.Data\obj\Debug\net8.0\WhatsAppChat.Data.AssemblyInfoInputs.cache
+C:\Manil Shah\Work\WhatsAppChat\WhatsAppChat.Data\obj\Debug\net8.0\WhatsAppChat.Data.AssemblyInfo.cs
+C:\Manil Shah\Work\WhatsAppChat\WhatsAppChat.Data\obj\Debug\net8.0\WhatsAppChat.Data.csproj.CoreCompileInputs.cache
+C:\Manil Shah\Work\WhatsAppChat\WhatsAppChat.Data\obj\Debug\net8.0\WhatsAppChat.Data.dll
+C:\Manil Shah\Work\WhatsAppChat\WhatsAppChat.Data\obj\Debug\net8.0\refint\WhatsAppChat.Data.dll
+C:\Manil Shah\Work\WhatsAppChat\WhatsAppChat.Data\obj\Debug\net8.0\WhatsAppChat.Data.pdb
+C:\Manil Shah\Work\WhatsAppChat\WhatsAppChat.Data\obj\Debug\net8.0\WhatsAppChat.Data.genruntimeconfig.cache
+C:\Manil Shah\Work\WhatsAppChat\WhatsAppChat.Data\obj\Debug\net8.0\ref\WhatsAppChat.Data.dll

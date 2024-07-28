@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34916.146
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhatsAppChat", "WhatsAppChat\WhatsAppChat.csproj", "{449DA71D-FCEE-458E-BD98-36B9BF9F60C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhatsAppChat.Core", "WhatsAppChat.Core\WhatsAppChat.Core.csproj", "{A0B3CE38-B126-4241-BEB0-13E2AFC213E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhatsAppChat.Data", "WhatsAppChat.Data\WhatsAppChat.Data.csproj", "{92283F04-B94B-4DC5-990A-89BAB4285649}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{449DA71D-FCEE-458E-BD98-36B9BF9F60C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{449DA71D-FCEE-458E-BD98-36B9BF9F60C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{449DA71D-FCEE-458E-BD98-36B9BF9F60C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{449DA71D-FCEE-458E-BD98-36B9BF9F60C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0B3CE38-B126-4241-BEB0-13E2AFC213E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0B3CE38-B126-4241-BEB0-13E2AFC213E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0B3CE38-B126-4241-BEB0-13E2AFC213E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0B3CE38-B126-4241-BEB0-13E2AFC213E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92283F04-B94B-4DC5-990A-89BAB4285649}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92283F04-B94B-4DC5-990A-89BAB4285649}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92283F04-B94B-4DC5-990A-89BAB4285649}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92283F04-B94B-4DC5-990A-89BAB4285649}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FB8F143A-23A8-4A31-8A02-F11E33838754}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,82 @@
+﻿@model WhatsAppChat.Core.Models.RegisterModel;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Register</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WhatsAppChat.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <br />
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <section>
+                <form asp-action="Register" asp-controller="Home" enctype="multipart/form-data" method="post">
+                    <h1 style="color:blueviolet" class="text-center mb-4">Register</h1>
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <label for="profile">
+                                <img src="~/Assets/defaultImage.jpg" accept=".jpg, .png, .jfif" alt="Alternate Text" style="border-radius:100%" height="200px" width="210px" id="profileImage" />
+                            </label>
+                            <input asp-for="ProfileImage" id="profile" hidden/>
+                        </div>
+                    </div>
+                    <div class="row mb-3 mt-5">
+                        <div class="form-floating col">
+                            <input asp-for="UserName" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                            <label asp-for="UserName" class="form-label">&nbsp;&nbsp; User Name</label>
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating col text-center">
+                            <input asp-for="PhoneNo" class="form-control" aria-required="true" placeholder="Contact Number" />
+                            <label asp-for="PhoneNo" class="form-label">&nbsp;&nbsp;Contact Number</label>
+                            <span asp-validation-for="PhoneNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="form-floating col">
+                            <input asp-for="Email" class="form-control" aria-required="true" placeholder="name@example.com" />
+                            <label asp-for="Email" class="form-label">&nbsp;&nbsp;Email</label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating col text-center">
+                            <input asp-for="Country" class="form-control" aria-required="true" placeholder="Country" />
+                            <label asp-for="Country" class="form-label">&nbsp;&nbsp;Country</label>
+                            <span asp-validation-for="Country" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="form-floating col">
+                            <input asp-for="Password" class="form-control" placeholder="Password" aria-required="true"/>
+                            <label asp-for="Password" class="form-label">&nbsp;&nbsp;Password</label>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating col text-center">
+                            <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password" aria-required="true" />
+                            <label asp-for="ConfirmPassword" class="form-label">&nbsp;&nbsp;Confirm Password</label>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button id="login-submit" type="submit" class="btn btn-lg btn-primary">Register</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <div class="col-3"></div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/register.js"></script>
+</body>
+</html>

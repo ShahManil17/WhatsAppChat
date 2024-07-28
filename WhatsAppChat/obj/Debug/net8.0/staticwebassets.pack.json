@@ -1,0 +1,297 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\WhatsAppChat.bundle.scp.css",
+      "PackagePath": "staticwebassets\\WhatsAppChat.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\Assets\\SendIcon.png",
+      "PackagePath": "staticwebassets\\Assets\\SendIcon.png"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\Assets\\defaultGroupIcon.png",
+      "PackagePath": "staticwebassets\\Assets\\defaultGroupIcon.png"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\Assets\\defaultImage.jpg",
+      "PackagePath": "staticwebassets\\Assets\\defaultImage.jpg"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\css\\sweetalert2.css",
+      "PackagePath": "staticwebassets\\css\\sweetalert2.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\uploads\\47052a8a-bd4c-4f55-8561-9cc863167ac9Screenshot (10).png",
+      "PackagePath": "staticwebassets\\uploads\\47052a8a-bd4c-4f55-8561-9cc863167ac9Screenshot (10).png"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\uploads\\4ac95e58-e715-4cdf-927a-13003e63de24Screenshot (10).png",
+      "PackagePath": "staticwebassets\\uploads\\4ac95e58-e715-4cdf-927a-13003e63de24Screenshot (10).png"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\uploads\\7cf112e9-9eb8-49e3-ba60-74b6a7ac8ed3Screenshot (13).png",
+      "PackagePath": "staticwebassets\\uploads\\7cf112e9-9eb8-49e3-ba60-74b6a7ac8ed3Screenshot (13).png"
+    },
+    {
+      "Id": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\uploads\\8f093b1d-3bad-4362-bf2e-56375717ecc4Screenshot (11).png",
+      "PackagePath": "staticwebassets\\uploads\\8f093b1d-3bad-4362-bf2e-56375717ecc4Screenshot (11).png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.WhatsAppChat.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.WhatsAppChat.props",
+      "PackagePath": "build\\WhatsAppChat.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.WhatsAppChat.props",
+      "PackagePath": "buildMultiTargeting\\WhatsAppChat.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.WhatsAppChat.props",
+      "PackagePath": "buildTransitive\\WhatsAppChat.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

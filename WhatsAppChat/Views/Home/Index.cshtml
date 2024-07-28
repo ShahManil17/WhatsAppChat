@@ -1,0 +1,143 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+}
+<div class="wrap" style="width: 100%;">
+	<section class="left">
+		<div class="profile row" style="align-items: center">
+			<div class="col text-center" onclick="editProfile()">
+				@if (ViewBag.CurrentUser != null)
+				{
+					<img src="@ViewBag.CurrentUser.ProfileImage" style="width: 60px; height: 50px;">
+				}
+				else
+				{
+					<img src="~/Assets/defaultImage.jpg" style="width: 60px; height: 50px;">
+				}
+			</div>
+			<div class="col text-center" style="font-size: 25px; color: navy;">
+				<b>
+					@if (ViewBag.CurrentUser != null)
+					{
+						@ViewBag.CurrentUser.UserName
+					}
+				</b>
+			</div>
+			<div class="col text-end">
+				<input type="button" value="Logout" class="btn btn-info" onclick="logOut()" />
+			</div>
+		</div>
+		@* <div class="wrap-search">
+			<div class="search">
+				<i class="fa fa-search fa" aria-hidden="true"></i>
+				<input type="text" class="input-search" placeholder="Search">
+			</div>
+		</div> *@
+		<div class="contact-list pt-3">
+			@if (ViewBag.AllUsers != null)
+			{
+				int counter = 0;
+				@foreach(var item in ViewBag.AllUsers) {
+					@if(counter != 0)
+					{
+						<hr />
+					}
+					<div class="row userHover" style="align-items:center" onclick="displayChat(@item.Id)">
+						<div class="col-2 ps-4">
+							<img src="@item.ProfileImage" style="border-radius: 100%" height="50px" width="50px">
+						</div>
+						<div class="col-8 ps-4">
+							<b style="font-size:20px">@item.UserName</b> <br />
+							<span style="padding:5px; font-size:16px; opacity: 0.7;" id="@item.Id:lastMessage">
+								@if (item.LastMessage != null)
+								{
+									@item.LastMessage
+								}
+							</span>
+						</div>
+						<div class="col-2 pe-2">
+							@if (ViewBag.unreadCount.Count > 0 && ViewBag.unreadCount[counter].Count != 0)
+							{
+								<span style="border-radius:50%; background-color:blue; color:white; padding:5px" id="@item.Id">
+									@ViewBag.unreadCount[counter].Count
+								</span>
+							}
+							else
+							{
+								<span style="border-radius:50%; background-color:blue; color:white" id="@item.Id"></span>
+							}
+						</div>
+					</div>
+					counter++;
+				}
+				counter = 0;
+				@foreach (var item in ViewBag.groupData)
+				{
+					<hr />
+					<div class="row userHover" style="align-items:center" onclick="displaygroupChat('@item.Id')">
+						<div class="col-2 ps-4">
+							<img src="@item.GroupIcon" style="border-radius: 100%" height="50px" width="50px">
+						</div>
+						<div class="col-8 ps-4">
+							<b style="font-size:20px">@item.GroupName</b> <br />
+							<span style="padding:5px; font-size:16px; opacity: 0.7;" id="@item.Id:LastMessage">
+								@if (item.LastMessage != null)
+								{
+									@item.LastMessage
+								}
+							</span>
+						</div>
+						<div class="col-2 pe-2">
+							@if (ViewBag.GroupUnreadList.Count > 0 && ViewBag.GroupUnreadList[counter].Count != 0)
+							{
+								<span style="border-radius:50%; background-color:blue; color:white; padding:5px" id="@item.Id">
+									@ViewBag.GroupUnreadList[counter].Count
+								</span>
+							}
+							else
+							{
+								<span style="border-radius:50%; background-color:blue; color:white" id="@item.Id"></span>
+							}
+						</div>
+					</div>
+					counter++;
+				}
+			}
+			
+			<div class="mt-4 pt-5 text-center">
+				<input type="button" value="CREATE GROUP" class="btn btn-primary" onclick="displayForm()"/>
+			</div>
+		</div>
+	</section>
+
+	<section class="right">
+		<div class="chat-head">
+			<img alt="profilepicture" id="chatProf" class="" style="height: 55px; width: 85px;" onclick="editMembers()">
+			<div class="chat-name" onclick="editMembers()">
+				<h1 class="font-name" style="margin:0px" id="chatName"></h1>
+				<p class="font-online" style="margin:0px" id="chatStatus"></p>
+			</div>
+			<form enctype="multipart/form-data" id="fileUploadForm">
+				<input type="number" name="SenderId" id="sender" value="1" hidden />
+				<input type="number" name="ReceiverId" id="receiver" value="1" hidden />
+				<input type="text" name="GroupId" id="group" hidden />
+				<label for="file" style="padding-top: 19px; padding-right: 12px;">
+					<i class="fa fa-paperclip fa-lg" aria-hidden="true"></i>
+				</label>
+				<input type="file" name="file" id="file" class="fileClass" value="" onchange="getValue()" multiple hidden/>
+			</form>
+		</div>
+		<div class="wrap-chat" id="messages">
+			
+		</div>
+		<div class="wrap-message pt-2">
+			<div class="message me-1 ms-4" style="width: 93%">
+				<input type="text" class="input-message" placeholder="Send Message" id="messageBox" style="border-radius: 20px; padding:15px;">
+			</div>
+			<div class="message" style="width: 3%; background:none;">
+				<span class="btn btn-primary" style="border-radius: 30%; width: 100%; padding-top:8px; padding-right:36px" onclick="send()" id="send">
+					<img src="~/Assets/SendIcon.png" alt="Alternate Text" height="27px" />
+				</span>
+			</div>
+		</div>
+	</section>
+</div>
