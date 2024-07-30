@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
+using System.Reflection;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using WhatsAppChat.Core.Models;
 using WhatsAppChat.Data;
@@ -143,87 +145,117 @@ namespace WhatsAppChat.Core
 			}
 		}
 
-		//public async Task SendFile(FIleUploadModel model, List<string>? Urls)
-		//{
-		//	var user = _context.Users
-		//		.Where(x => x.Id == model.ReceiverId)
-		//		.FirstOrDefault();
+		public async Task SendFile(object model, List<string>? urls)
+		{
+			try
+			{
+				string? stringModel = model.ToString();
+				if(stringModel != null)
+				{
+					tempResponseModel? data = JsonSerializer.Deserialize<tempResponseModel>(stringModel);
+					if(data != null)
+					{
+						var user = _context.Users
+							.Where(x => x.Id == data.receiverId)
+							.FirstOrDefault();
 
-		//	if (Urls != null && Urls.Any())
-		//	{
-		//		foreach (var item in Urls)
-		//		{
-		//			Communication communication = new Communication()
-		//			{
-		//				SendTime = DateTime.Now,
-		//				IsRead = 0,
-		//				IsDelivered = user?.ConnectionId == null ? 0 : 1,
-		//				FilePath = item,
-		//				SenderId = model.SenderId,
-		//				ReceiverId = model.ReceiverId
-		//			};
-		//			await _context.Communication.AddAsync(communication);
-		//		}
-		//		await _context.SaveChangesAsync();
+						//if (urls != null && urls.Any())
+						//{
+						//	foreach (var item in urls)
+						//	{
+						//		Communication communication = new Communication()
+						//		{
+						//			SendTime = DateTime.Now,
+						//			IsRead = 0,
+						//			IsDelivered = user?.ConnectionId == null ? 0 : 1,
+						//			FilePath = item,
+						//			SenderId = data.senderId,
+						//			ReceiverId = data.receiverId
+						//		};
+						//		await _context.Communication.AddAsync(communication);
+						//	}
+						//	await _context.SaveChangesAsync();
+						//}
+						if (user?.ConnectionId != null)
+						{
+							Console.WriteLine(user.ConnectionId);
+							await Clients.Client(user.ConnectionId).SendAsync("ReceiveFile", data.senderId, _contextAccessor.HttpContext?.Request.Cookies["userId"], urls);
+						}
+					}
+				}
+			}
+			catch(Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+			}
+			
+		}
 
-		//	}
-		//	if (user?.ConnectionId != null)
-		//	{
-		//		await Clients.Client(user.ConnectionId).SendAsync("ReceiveFile", model.SenderId, _contextAccessor.HttpContext?.Request.Cookies["userId"], Urls);
-		//	}
-		//}
+		public async Task SendFileToGroup(object model, List<string>? urls)
+		{
+			int userId = Convert.ToInt32(_contextAccessor.HttpContext?.Request.Cookies["userId"]);
 
-		//public async Task SendFileToGroup(FIleUploadModel model, List<string>? Urls)
-		//{
-		//	int userId = Convert.ToInt32(_contextAccessor.HttpContext?.Request.Cookies["userId"]);
-
-		//	// Add File To GroupMessages
-		//	Groups? groupData = _context.Groups
-		//		.Where(x => x.Id == model.GroupId)
-		//		.FirstOrDefault();
-		//	var userName = _context.Users
-		//					.Where(x => x.Id == userId)
-		//					.FirstOrDefault();
-		//	var userDelatils = _context.Users
-		//		.Join(_context.GroupHasMembers, t1 => t1.Id, t2 => t2.UserId, (t1, t2) => new { t1, t2 })
-		//		.Where(t => t.t2.GroupId == model.GroupId)
-		//		.ToList();
-		//	if (Urls != null && Urls.Any())
-		//	{
-  //              foreach (var item in Urls)
-  //              {
-		//			Data.DataModel.GroupMessages groupMessage = new Data.DataModel.GroupMessages()
-		//			{
-		//				SendTime = DateTime.Now,
-		//				IsRead = 0,
-		//				IsDelivered = 0,
-		//				FilePath = item,
-		//				SenderId = model.SenderId,
-		//				GroupId = model.GroupId
-		//			};
-		//			_context.GroupMessages.Add(groupMessage);
-		//			_context.SaveChanges();
-		//			if (groupData != null)
-		//			{
-		//				foreach (var userItem in userDelatils)
-		//				{
-		//					if (userItem.t1.ConnectionId == null)
-		//					{
-		//						var unreadMessages = new GroupUnreads()
-		//						{
-		//							MessageId = groupMessage.Id,
-		//							UserId = userItem.t1.Id,
-		//							GroupId = model.GroupId
-		//						};
-		//						_context.GroupUnreads.Add(unreadMessages);
-		//						_context.SaveChanges();
-		//					}
-		//				}
-		//			}
-		//		}
-		//		await Clients.Group(groupData.GroupName).SendAsync("SendFileToGroup", Convert.ToInt32(_contextAccessor.HttpContext?.Request.Cookies["userId"]), userName?.UserName, model.GroupId, Urls);
-		//	}
-		//}
+			try
+			{
+				string? stringModel = model.ToString();
+				if (stringModel != null)
+				{
+					tempResponseModel? data = JsonSerializer.Deserialize<tempResponseModel>(stringModel);
+					if (data != null)
+					{
+						// Add File To GroupMessages
+						Groups? groupData = _context.Groups
+							.Where(x => x.Id == data.groupId)
+							.FirstOrDefault();
+						var userName = _context.Users
+										.Where(x => x.Id == userId)
+										.FirstOrDefault();
+						var userDelatils = _context.Users
+							.Join(_context.GroupHasMembers, t1 => t1.Id, t2 => t2.UserId, (t1, t2) => new { t1, t2 })
+							.Where(t => t.t2.GroupId == data.groupId)
+							.ToList();
+						//if (urls != null && urls.Any())
+						//{
+						//	foreach (var item in urls)
+						//	{
+						//		Data.DataModel.GroupMessages groupMessage = new Data.DataModel.GroupMessages()
+						//		{
+						//			SendTime = DateTime.Now,
+						//			IsRead = 0,
+						//			IsDelivered = 0,
+						//			FilePath = item,
+						//			SenderId = data.senderId,
+						//			GroupId = data.groupId
+						//		};
+						//		_context.GroupMessages.Add(groupMessage);
+						//		_context.SaveChanges();
+						//		if (groupData != null)
+						//		{
+						//			foreach (var userItem in userDelatils)
+						//			{
+						//				if (userItem.t1.ConnectionId == null)
+						//				{
+						//					var unreadMessages = new GroupUnreads()
+						//					{
+						//						MessageId = groupMessage.Id,
+						//						UserId = userItem.t1.Id,
+						//						GroupId = data.groupId
+						//					};
+						//					_context.GroupUnreads.Add(unreadMessages);
+						//					_context.SaveChanges();
+						//				}
+						//			}
+						//		}
+						//	}
+						await Clients.Group(groupData.GroupName).SendAsync("ReceiveFromGroup", Convert.ToInt32(_contextAccessor.HttpContext?.Request.Cookies["userId"]), userName?.UserName, data.groupId, urls);
+						}
+					}
+				}
+				catch(Exception ex)
+				{
+					Console.WriteLine(ex.Message);
+				}
+			}
 
 		public override Task OnDisconnectedAsync(Exception? exception)
 		{

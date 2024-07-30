@@ -101,6 +101,14 @@ connection.on('SendToGroup', async (senderId, senderName, group, message) => {
     messages.scrollIntoView();
 });
 
+connection.on("ReceiveFile", (sender, rec, urls) => {
+    console.log(`Sender : ${sender}`)
+});
+
+connection.on("ReceiveFromGroup", async (senderId, senderName, group, message) => {
+    console.log(`Sender : ${senderName}`)
+});
+
 //connection.on('ReceiveFile', async (sender, rec, messageUrl) => {
 //    if (rec == receiver && isGroup == false) {
 //        let response = await fetch(`${window.location.origin}/Services/markAsRead?senderId=${receiver}&receiverId=${Number(sender)}`);
@@ -198,7 +206,6 @@ connection.on('SendToGroup', async (senderId, senderName, group, message) => {
 }
 
 async function displayChat(id) {
-    alert(id);
     let temp = new Date().toLocaleDateString();
     const currentDate = new Date(temp);
     isGroup = false;
@@ -517,6 +524,11 @@ async function editMembers() {
 }
 
 async function getValue() {
+    if (!isGroup && receiver == 0) {
+        alert('Please Select Group Or User To Send File!');
+        return;
+    }
+
     //var formData = new FormData(document.getElementById('fileUploadForm'));
     const sender = ('; ' + document.cookie).split(`; userId=`).pop().split(';')[0];
     let formData = new FormData();
@@ -526,11 +538,56 @@ async function getValue() {
 
     const fileEle = document.getElementById('file');
     for (const file of fileEle.files) {
-        console.log(file);
         formData.append('Files', file);
     }
     let response = await fetch('/Services/SendFile', {
         method: 'POST',
         body: formData,
     });
+    let fileData = await response.json();
+    console.log(fileData);
+
+    if (globalDay != -1) {
+        messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
+                <div class="col text-center">
+                    <span style="border-radius: 10px; padding: 5px; background-color: lavender;">Today</span>
+                </div>
+            </div>`;
+        globalDay = -1;
+    }
+    let fileCounter = 0;
+    for (const file of fileEle.files) {
+        messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
+            <div class="col-2"></div>
+            <div class="col-10 text-end">
+                <embed src="" height="300px" id="file${fileCounter}">
+                <br />
+                <span style="padding:5px; font-size:13px; opacity: 0.7;">
+                    ${currentTime.toLocaleTimeString('en-US', { hour12: false }).slice(0, 5)}
+                </span>
+            </div>
+        </div>`;
+        fileCounter++;
+    }
+    document.getElementById(`${receiver}:lastMessage`).innerText = '🎞 File';
+    for (let i = 0; i < fileCounter; i++) {
+        let fReader = new FileReader();
+        fReader.readAsDataURL(fileEle.files[i]);
+        fReader.onload = function (event) {
+            let img = document.getElementById(`file${i}`);
+            img.src = event.target.result;
+        }
+    }
+    if (isGroup) {
+        //for (let i = 0; i < fileCounter; i++) {
+        //    document.getElementById(`file${i}`).src = fileData.urls[i];
+        //}
+        await connection.invoke("SendFileToGroup", fileData.upload, fileData.urls);
+    }
+    else if (receiver != 0) {
+        //for (let i = 0; i < fileCounter; i++) {
+        //    document.getElementById(`file${i}`).src = fileData.urls[i];
+        //}
+        await connection.invoke("SendFile", fileData.upload, fileData.urls);
+    }
 }

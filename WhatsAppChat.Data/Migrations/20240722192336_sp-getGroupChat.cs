@@ -10,8 +10,7 @@ namespace WhatsAppChat.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-			var sp = @"CREATE OR ALTER PROCEDURE [dbo].[getGroupChat]
-			@groupId VARCHAR(max)
+			var sp = @"CREATE OR ALTER PROCEDURE [dbo].[getGroupChat] @groupId VARCHAR(max)
 			AS
 			BEGIN
 				SELECT (
@@ -21,7 +20,14 @@ namespace WhatsAppChat.Data.Migrations
 						INNER JOIN Users ON Users.Id = message.SenderId
 						WHERE (message.GroupId = @groupId)
 						FOR JSON PATH
-					)AS Message
+					)AS Message,
+					(
+						SELECT Users.UserName, Users.Id FROM Groups
+						INNER JOIN GroupHasMembers AS Members ON Members.GroupId = Groups.Id
+						INNER JOIN Users ON Users.Id = Members.UserId
+						WHERE Groups.Id = @groupId
+						FOR JSON PATH
+					)AS GroupMembers
 					FROM Groups AS Groups WHERE Groups.Id = @groupId
 					FOR JSON PATH
 					)

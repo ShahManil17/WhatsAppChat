@@ -23,34 +23,36 @@ namespace WhatsAppChat.Core.Repositories.Implementations
 			try
 			{
 				List<string>? returnStrings = new List<string>();
-
-                foreach (var item in model.Files)
-                {
-					string fileName = item.FileName;
-					using (var memoryStream = new MemoryStream())
+				if(model != null)
+				{
+					foreach (var item in model.Files)
 					{
-						item.CopyTo(memoryStream);
-						memoryStream.Position = 0;
-
-						var sasBuilder = new BlobSasBuilder()
+						string fileName = Guid.NewGuid().ToString()+item.FileName;
+						using (var memoryStream = new MemoryStream())
 						{
-							BlobContainerName = "sentfiles",
-							BlobName = fileName,
-							Resource = "b",
-							StartsOn = DateTime.UtcNow.AddMinutes(-2),
-							ExpiresOn = DateTime.UtcNow.AddMinutes(2880),
-						};
-						sasBuilder.SetPermissions(BlobSasPermissions.Read);
+							item.CopyTo(memoryStream);
+							memoryStream.Position = 0;
 
-						var sasToken = sasBuilder.ToSasQueryParameters(new StorageSharedKeyCredential(_configuration.GetValue<string>("AsureConnectionString:AccountName"), _configuration.GetValue<string>("AsureConnectionString:AccessKey")));
+							var sasBuilder = new BlobSasBuilder()
+							{
+								BlobContainerName = "sentfiles",
+								BlobName = fileName,
+								Resource = "b",
+								StartsOn = DateTime.UtcNow.AddMinutes(-2),
+								ExpiresOn = DateTime.UtcNow.AddMinutes(2880),
+							};
+							sasBuilder.SetPermissions(BlobSasPermissions.Read);
 
-						var newBlobClient = new BlobClient(_configuration.GetValue<string>("AsureConnectionString:ConnectionString"), "sentfiles", fileName);
+							var sasToken = sasBuilder.ToSasQueryParameters(new StorageSharedKeyCredential(_configuration.GetValue<string>("AsureConnectionString:AccountName"), _configuration.GetValue<string>("AsureConnectionString:AccessKey")));
 
-						Console.WriteLine($"{new BlobClient(_configuration.GetValue<string>("AsureConnectionString:ConnectionString"), "sentfiles", fileName).Uri}?{sasToken}");
+							var newBlobClient = new BlobClient(_configuration.GetValue<string>("AsureConnectionString:ConnectionString"), "sentfiles", fileName);
 
-						var client = await newBlobClient.UploadAsync(memoryStream);
+							Console.WriteLine($"{new BlobClient(_configuration.GetValue<string>("AsureConnectionString:ConnectionString"), "sentfiles", fileName).Uri}?{sasToken}");
 
-						returnStrings.Add($"{new BlobClient(_configuration.GetValue<string>("AsureConnectionString:ConnectionString"), "sentfiles", fileName).Uri}?{sasToken}");
+							var client = await newBlobClient.UploadAsync(memoryStream);
+
+							returnStrings.Add($"{new BlobClient(_configuration.GetValue<string>("AsureConnectionString:ConnectionString"), "sentfiles", fileName).Uri}?{sasToken}");
+						}
 					}
 				}
 

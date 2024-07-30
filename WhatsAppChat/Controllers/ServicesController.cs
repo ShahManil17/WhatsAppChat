@@ -19,22 +19,22 @@ namespace WhatsAppChat.Controllers
     {
         private readonly IGet _get;
         private readonly IPost _post;
-        //private readonly IFileOperations _fileIO;
-		//private readonly IHubContext<Chat> _hubContext;
+        private readonly IFileOperations _fileIO;
+        //private readonly IHubContext<Chat> _hubContext;
         //private readonly Chat _chat;
-		//BlobServiceClient _blobClient;
-		//BlobContainerClient _containerClient;
-		public ServicesController(IGet get, IPost post/*, IFileOperations fileIO, IHubContext<Chat> hubCintext, Chat chat*/)
+        BlobServiceClient _blobClient;
+        BlobContainerClient _containerClient;
+        public ServicesController(IGet get, IPost post, IFileOperations fileIO, IConfiguration config/*, IHubContext<Chat> hubCintext, Chat chat*/)
         {
             _get = get;
             _post = post;
-            //_fileIO = fileIO;
+            _fileIO = fileIO;
             //_hubContext = hubCintext;
             //_chat = chat;
-			//_blobClient = new BlobServiceClient(config.GetValue<string>("AsureConnectionString:ConnectionString"));
-   //         _containerClient = _blobClient.GetBlobContainerClient("sentfiles");
-			//_containerClient.CreateIfNotExistsAsync();
-		}
+            _blobClient = new BlobServiceClient(config.GetValue<string>("AsureConnectionString:ConnectionString"));
+            _containerClient = _blobClient.GetBlobContainerClient("sentfiles");
+            _containerClient.CreateIfNotExistsAsync();
+        }
 
         [HttpGet("getSingleUser")]
 		public async Task<Users?> GetSingleUser()
@@ -150,28 +150,32 @@ namespace WhatsAppChat.Controllers
 			return RedirectToAction("Index", "Home");
 		}
 
-    //    [HttpPost("SendFile")]
-    //    public async Task SendFileToUser (FIleUploadModel model)
-    //    {
-    //        try
-    //        {
-				//var Urls = await _fileIO.UploadFileAsync(model);
-
-    //            if(model.ReceiverId != null)
-    //            {
-    //                // Send To Client 
-    //                await _chat.SendFile(model, Urls);
-    //            }
-    //            else if(model.GroupId != null)
-    //            {
-    //                // Send to Group
-    //                await _chat.SendFileToGroup(model, Urls);
-    //            }
-    //        }
-    //        catch(Exception ex)
-    //        {
-    //            Console.WriteLine(ex);
-    //        }
-    //    }
-	}
+        [HttpPost("SendFile")]
+        public async Task<ApiObjectModel?> SendFileToUser(FIleUploadModel model)
+        {
+            try
+            {
+                ApiObjectModel apiModel = new ApiObjectModel()
+                {
+                    Urls = await _fileIO.UploadFileAsync(model),
+                    Upload = model
+                };
+                return apiModel;
+                //if (model.ReceiverId != null)
+                //{
+                //    // Send To Client 
+                //    await _chat.SendFile(model, Urls);
+                //}
+                //else if (model.GroupId != null)
+                //{
+                //    // Send to Group
+                //    await _chat.SendFileToGroup(model, Urls);
+                //}
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+    }
 }

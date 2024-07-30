@@ -57,13 +57,13 @@
 						<div class="col-2 pe-2">
 							@if (ViewBag.unreadCount.Count > 0 && ViewBag.unreadCount[counter].Count != 0)
 							{
-								<span style="border-radius:50%; background-color:blue; color:white; padding:5px" id="@item.Id">
+								<span style="border-radius:50%; background-color:green; color:white; padding:5px" id="@item.Id">
 									@ViewBag.unreadCount[counter].Count
 								</span>
 							}
 							else
 							{
-								<span style="border-radius:50%; background-color:blue; color:white" id="@item.Id"></span>
+								<span style="border-radius:50%; background-color:green; color:white" id="@item.Id"></span>
 							}
 						</div>
 					</div>
@@ -89,13 +89,13 @@
 						<div class="col-2 pe-2">
 							@if (ViewBag.GroupUnreadList.Count > 0 && ViewBag.GroupUnreadList[counter].Count != 0)
 							{
-								<span style="border-radius:50%; background-color:blue; color:white; padding:5px" id="@item.Id">
+								<span style="border-radius:50%; background-color:green; color:white; padding:5px" id="@item.Id">
 									@ViewBag.GroupUnreadList[counter].Count
 								</span>
 							}
 							else
 							{
-								<span style="border-radius:50%; background-color:blue; color:white" id="@item.Id"></span>
+								<span style="border-radius:50%; background-color:green; color:white" id="@item.Id"></span>
 							}
 						</div>
 					</div>
