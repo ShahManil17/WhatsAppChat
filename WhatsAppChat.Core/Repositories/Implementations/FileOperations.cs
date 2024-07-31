@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WhatsAppChat.Core.Models;
+using Azure.Storage.Blobs.Models;
 
 namespace WhatsAppChat.Core.Repositories.Implementations
 {
@@ -47,9 +48,7 @@ namespace WhatsAppChat.Core.Repositories.Implementations
 
 							var newBlobClient = new BlobClient(_configuration.GetValue<string>("AsureConnectionString:ConnectionString"), "sentfiles", fileName);
 
-							Console.WriteLine($"{new BlobClient(_configuration.GetValue<string>("AsureConnectionString:ConnectionString"), "sentfiles", fileName).Uri}?{sasToken}");
-
-							var client = await newBlobClient.UploadAsync(memoryStream);
+							var client = await newBlobClient.UploadAsync(memoryStream, new BlobHttpHeaders { ContentType = item.ContentType });
 
 							returnStrings.Add($"{new BlobClient(_configuration.GetValue<string>("AsureConnectionString:ConnectionString"), "sentfiles", fileName).Uri}?{sasToken}");
 						}

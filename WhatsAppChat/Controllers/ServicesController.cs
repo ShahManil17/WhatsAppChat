@@ -157,20 +157,14 @@ namespace WhatsAppChat.Controllers
             {
                 ApiObjectModel apiModel = new ApiObjectModel()
                 {
-                    Urls = await _fileIO.UploadFileAsync(model),
+                    Urls = new UrlResponseModel()
+                    {
+                        urls = await _fileIO.UploadFileAsync(model),
+                        type = new List<string>()
+					},
                     Upload = model
                 };
                 return apiModel;
-                //if (model.ReceiverId != null)
-                //{
-                //    // Send To Client 
-                //    await _chat.SendFile(model, Urls);
-                //}
-                //else if (model.GroupId != null)
-                //{
-                //    // Send to Group
-                //    await _chat.SendFileToGroup(model, Urls);
-                //}
             }
             catch (Exception ex)
             {

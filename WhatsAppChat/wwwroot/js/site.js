@@ -101,54 +101,120 @@ connection.on('SendToGroup', async (senderId, senderName, group, message) => {
     messages.scrollIntoView();
 });
 
-connection.on("ReceiveFile", (sender, rec, urls) => {
-    console.log(`Sender : ${sender}`)
+connection.on("ReceiveFile", async (sender, rec, urls) => {
+    let fileCounter = 0;
+    if (rec == receiver && isGroup == false) {
+        let responseData = await fetch(`/Services/markAsRead?senderId=${rec}&receiverId=${Number(sender)}`);
+        if (globalDay != -1) {
+            messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
+                <div class="col text-center">
+                    <span style="border-radius: 10px; padding: 7px; background-color: lavender;">Today</span>
+                </div>
+            </div>`;
+            globalDay = -1;
+        }
+
+        let htmlStr = ``;
+        urls.urls.forEach((ele, index) => {
+            htmlStr += `<div class="row ps-5 pe-5 pt-2 pb-2">
+            <div class="col-10 text-start">`;
+            if (urls.type[fileCounter].slice(0, 5) == "image") {
+                htmlStr += `<a href="${ele}" target='_blank' download><img src="${ele}" height="300px" id="${ele}" /></a>`;
+            }
+            else {
+                htmlStr += `<embed src="${ele}" height="300px" id="${ele}" />`;
+            }
+            document.getElementById(`${receiver}:lastMessage`).innerText = '🎞 File';
+            htmlStr += `<br />
+                    <span style="padding:5px; font-size:13px; opacity: 0.7;">
+                        ${currentTime.toLocaleTimeString('en-US', { hour12: false }).slice(0, 5)}
+                    </span>
+                </div>
+                <div class="col-2"></div>
+            </div>`;
+            fileCounter++;
+        });
+        messages.innerHTML += htmlStr;
+        messages.scrollTop = messages.scrollHeight;
+        messages.scrollIntoView();
+    }
+    else {
+        const numberEle = document.getElementById(`${rec}`);
+        if (numberEle.innerText == '') {
+            numberEle.style.padding = '5px';
+            numberEle.innerText = `${urls.urls.length}`;
+        }
+        else {
+            numberEle.innerText = `${Number(numberEle.innerText) + fileCounter}`;
+        }
+
+        // Display Last Message
+        if (urls.type[urls.urls.length - 1].split("/")[0] == 'image') {
+            document.getElementById(`${rec}:lastMessage`).innerText = `🎞 File`;
+        }
+        else {
+            document.getElementById(`${rec}:lastMessage`).innerText = `🎞 File`;
+        }
+    }
+    messages.scrollTop = messages.scrollHeight;
+    messages.scrollIntoView();
 });
 
-connection.on("ReceiveFromGroup", async (senderId, senderName, group, message) => {
-    console.log(`Sender : ${senderName}`)
+connection.on("ReceiveFromGroup", async (senderId, senderName, group, urls) => {
+    let fileCounter = 0;
+    const sender = ('; ' + document.cookie).split(`; userId=`).pop().split(';')[0];
+    if (isGroup == true && groupId == group) {
+        if (senderId.toString() != sender) {
+            let messageString = ``;
+            if (globalDay != -1) {
+                messageString += `<div class="row ps-5 pe-5 pt-2 pb-2">
+                <div class="col text-center">
+                    <span style="border-radius: 10px; padding: 7px; background-color: lavender;">Today</span>
+                </div>
+            </div>`;
+                globalDay = -1;
+            }
+            urls.urls.forEach((ele, index) => {
+                messageString += `<div class="row ps-5 pe-5 pt-2 pb-2">
+                    <div class="col-10 text-start" style="overflow-wrap: anywhere;">`;
+                if (urls.type[fileCounter].slice(0, 5) == "image") {
+                    messageString += `<a href="${ele}" target='_blank' download><img src="${ele}" height="300px" id="${ele}" /></a>`;
+                }
+                else {
+                    messageString += `<embed src="${ele}" height="300px" id="${ele}" />`;
+                    
+                }
+                document.getElementById(`${group}:LastMessage`).innerText = '🎞 File';
+                messageString += `<br />
+                        <span style="padding:5px; font-size:13px; opacity: 0.7;">
+                            ${currentTime.toLocaleTimeString('en-US', { hour12: false }).slice(0, 5)} : ${senderName}
+                        </span>
+                    </div>
+                    <div class="col-2"></div>
+                </div>`;
+                fileCounter++;
+            });
+            messages.innerHTML += messageString;
+        }
+    }
+    else {
+        let response = await fetch(`/Services/AddInGroupUnreads?senderId=${sender}&groupId=${group}`);
+
+        const numberEle = document.getElementById(`${group}`);
+        if (numberEle.innerText == '') {
+            numberEle.style.padding = '5px';
+            numberEle.innerText = `${urls.urls.length}`;
+        }
+        else {
+            numberEle.innerText = `${Number(numberEle.innerText) + fileCounter}`;
+        }
+
+        // Display Last Message
+        document.getElementById(`${group}:LastMessage`).innerText = `🎞 File`;
+    }
+    messages.scrollTop = messages.scrollHeight;
+    messages.scrollIntoView();
 });
-
-//connection.on('ReceiveFile', async (sender, rec, messageUrl) => {
-//    if (rec == receiver && isGroup == false) {
-//        let response = await fetch(`${window.location.origin}/Services/markAsRead?senderId=${receiver}&receiverId=${Number(sender)}`);
-//        if (globalDay != -1) {
-//            messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
-//                <div class="col text-center">
-//                    <span style="border-radius: 10px; padding: 7px; background-color: lavender;">Today</span>
-//                </div>
-//            </div>`;
-//            globalDay = -1;
-//        }
-//        messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2" style="align-items:end">
-//            <div class="col-10" style="overflow-wrap: anywhere;">
-//            <span style="background-color: rgb(240, 255, 255, 0.6); padding:5px; border-radius:10px">${messageText}</span>
-//            <br/>
-//            <span style="padding:5px; font-size:13px; opacity: 0.7;">
-//                ${currentTime.toLocaleTimeString('en-US', { hour12: false }).slice(0, 5)}
-//            </span>
-//            </div>
-//            <div class="col-2"></div>
-//        </div>`;
-//        document.getElementById(`${rec}:lastMessage`).innerText = messageText;
-//    }
-//    else {
-//        const numberEle = document.getElementById(`${rec}`);
-//        if (numberEle.innerText == '') {
-//            numberEle.style.padding = '5px';
-//            numberEle.innerText = '1';
-
-//            // Display Last Message
-//            document.getElementById(`${rec}:lastMessage`).innerText = messageText;
-//        }
-//        else {
-//            numberEle.innerText = `${Number(numberEle.innerText) + 1}`;
-//            document.getElementById(`${rec}:lastMessage`).innerText = messageText;
-//        }
-//    }
-//    messages.scrollTop = messages.scrollHeight;
-//    messages.scrollIntoView();
-//});
 
  function send() {
     const message = messageBox.value;
@@ -234,27 +300,28 @@ async function displayChat(id) {
     }
     if (data.message != null) {
         let dateArr = [];
+        let messageString = ``;
         data.message.forEach(function (ele, index) {
             var messageDate = new Date(Date.parse(ele.sendTime));
             let dateDiff = Math.floor((currentDate.getTime() - messageDate.getTime()) / 86400000);
             if (!dateArr.includes(dateDiff)) {
                 dateArr.push(dateDiff);
                 if (dateDiff == -1) {
-                    messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
+                    messageString += `<div class="row ps-5 pe-5 pt-2 pb-2">
                         <div class="col text-center">
                             <span style="border-radius: 10px; padding: 5px; background-color: lavender;">Today</span>
                         </div>
                     </div>`;
                 }
                 else if (dateDiff == 0) {
-                    messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
+                    messageString += `<div class="row ps-5 pe-5 pt-2 pb-2">
                         <div class="col text-center" style="backgroud-color:yellow">
                             <span style="border-radius: 10px; padding: 5px; background-color: lavender;">Yesterday</span>
                         </div>
                     </div>`;
                 }
                 else {
-                    messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
+                    messageString += `<div class="row ps-5 pe-5 pt-2 pb-2">
                         <div class="col text-center" style="backgroud-color:yellow">
                             <span style="border-radius: 10px; padding: 3px; background-color: lavender;">${ele.sendTime.toString().slice(0, 10)}</span>
                         </div>
@@ -262,22 +329,43 @@ async function displayChat(id) {
                 }
             }
             if (ele.senderId.toString() == ('; ' + document.cookie).split(`; userId=`).pop().split(';')[0]) {
-                messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
+                messageString += `<div class="row ps-5 pe-5 pt-2 pb-2">
                     <div class="col-2"></div>
-                    <div class="col-10 text-end" style="overflow-wrap: anywhere;">
-                    <span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px">${ele.message}</span>
-                    <br/>
+                    <div class="col-10 text-end" style="overflow-wrap: anywhere;">`;
+                if (ele.filePath != null) {
+                    if (ele.fileType.slice(0, 5) == 'image') {
+                        messageString += `<a href="${ele.filePath}" target='_blank' download><img src="${ele.filePath}" height="300px" id="${ele.filePath}" /></a>`;
+                    }
+                    else {
+                        messageString += `<embed src="${ele.filePath}" height="300px" id="${ele.filePath}" />`;
+                    }
+                }
+                else if (ele.message != null) {
+                    messageString += `<span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px">${ele.message}</span>`;
+                }    
+                messageString += `<br/>
                     <span style="padding:5px; font-size:13px; opacity: 0.7;">
                         ${ele.sendTime.toString().slice(11, 16)}
                     </span>
                     </div>
                 </div>`;
+                
             }
             else {
-                messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
-                    <div class="col-10 text-start" style="overflow-wrap: anywhere;">
-                        <span style="background-color:rgb(240, 255, 255, 0.6); padding:5px; border-radius:10px">${ele.message}</span>
-                        <br/>
+                messageString += `<div class="row ps-5 pe-5 pt-2 pb-2">
+                <div class="col-10 text-start" style="overflow-wrap: anywhere;">`;
+                if (ele.filePath != null) {
+                    if (ele.fileType.slice(0, 5) == 'image') {
+                        messageString += `<a href="${ele.filePath}" target='_blank' download><img src="${ele.filePath}" height="300px" id="${ele.filePath}" /></a>`;
+                    }
+                    else {
+                        messageString += `<embed src="${ele.filePath}" height="300px" id="${ele.filePath}" />`;
+                    }
+                }
+                else if (ele.message != null) {
+                    messageString += `<span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px">${ele.message}</span>`;
+                }
+                messageString += `<br/>
                         <span style="padding:5px; font-size:13px; opacity: 0.7;">
                             ${ele.sendTime.toString().slice(11, 16)}
                         </span>
@@ -286,6 +374,7 @@ async function displayChat(id) {
                 </div>`;
             }
         });
+        messages.innerHTML = messageString;
         globalDay = dateArr[dateArr.length - 1];
     }
     messages.scrollTop = messages.scrollHeight;
@@ -342,7 +431,6 @@ async function displaygroupChat(id) {
     document.getElementById('chatProf').src = data.groupIcon;
     document.getElementById('chatName').innerText = data.groupName;
     
-
     //Remove
     let groupResponse = await fetch(`Services/deleteFromUnreads?SenderId=${Number(sender)}&GroupId=${id}`);
     if (data.groupMembers != null) {
@@ -385,12 +473,23 @@ async function displaygroupChat(id) {
                     </div>`;
                 }
             }
+            let messageString = ``;
             if (ele.senderId.toString() == sender) {
-                messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
+                messageString += `<div class="row ps-5 pe-5 pt-2 pb-2">
                     <div class="col-2"></div>
-                    <div class="col-10 text-end" style="overflow-wrap: anywhere;">
-                        <span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px">${ele.message}</span>
-                        <br/>
+                    <div class="col-10 text-end" style="overflow-wrap: anywhere;">`;
+                if (ele.filePath != null) {
+                    if (ele.fileType.slice(0, 5) == 'image') {
+                        messageString += `<a href="${ele.filePath}" target='_blank' download><img src="${ele.filePath}" height="300px" id="${ele.filePath}" /></a>`;
+                    }
+                    else {
+                        messageString += `<embed src="${ele.filePath}" height="300px" id="${ele.filePath}" />`;
+                    }
+                }
+                else if (ele.message != null) {
+                    messageString += `<span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px">${ele.message}</span>`;
+                }
+                messageString += `<br/>
                         <span style="padding:5px; font-size:13px; opacity: 0.7;">
                             ${ele.sendTime.toString().slice(11, 16)}
                         </span>
@@ -398,12 +497,20 @@ async function displaygroupChat(id) {
                 </div>`;
             }
             else {
-                messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
-                    <div class="col-10 text-start" style="overflow-wrap: anywhere;">
-                        <span style="background-color:rgb(240, 255, 255, 0.6); padding:5px; border-radius:10px">
-                            ${ele.message}
-                        </span>
-                        <br />
+                messageString += `<div class="row ps-5 pe-5 pt-2 pb-2">
+                    <div class="col-10 text-start" style="overflow-wrap: anywhere;">`;
+                if (ele.filePath != null) {
+                    if (ele.fileType.slice(0, 5) == 'image') {
+                        messageString += `<a href="${ele.filePath}" target='_blank' download><img src="${ele.filePath}" height="300px" id="${ele.filePath}" /></a>`;
+                    }
+                    else {
+                        messageString += `<embed src="${ele.filePath}" height="300px" id="${ele.filePath}" />`;
+                    }
+                }
+                else if (ele.message != null) {
+                    messageString += `<span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px">${ele.message}</span>`;
+                }
+                messageString += `<br />
                         <span style="padding:5px; font-size:13px; opacity: 0.7;">
                             ${ele.sendTime.toString().slice(11, 16)} : ${ele.userName}
                         </span>
@@ -411,6 +518,7 @@ async function displaygroupChat(id) {
                     <div class="col-2"></div>
                 </div>`;
             }
+            messages.innerHTML += messageString;
             globalDay = dateArr[dateArr.length - 1];
         });
     }
@@ -437,7 +545,7 @@ async function editProfile(id) {
         html: `<form action="/Services/editProfile" method="post" enctype="multipart/form-data" style="text-align:left">
             <input type="number" name="Id" value="${EditProfileData.id}" hidden>
             <label for="userProfile" style="width:100%; text-align:center">
-                <img src='${profImage[profImage.length - 1]}' id="image" style="height:150px; border-radius:100%"/>
+                <img src='${profImage[profImage.length - 1]}' id="image" style="height:170px; border-radius:10px;"/>
             </label>
             <input type="file" id="userProfile" name="ProfileImage" onchange="changeProfileImage()" hidden/>
             <br /><br />
@@ -545,8 +653,9 @@ async function getValue() {
         body: formData,
     });
     let fileData = await response.json();
-    console.log(fileData);
-
+    fileData.upload.files.forEach((ele) => {
+        fileData.urls.type.push(ele.contentType)
+    });
     if (globalDay != -1) {
         messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
                 <div class="col text-center">
@@ -555,39 +664,46 @@ async function getValue() {
             </div>`;
         globalDay = -1;
     }
-    let fileCounter = 0;
-    for (const file of fileEle.files) {
-        messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
+    /*let fileCounter = 0;*/
+    let htmlStr = ``;
+    fileData.urls.urls.forEach((ele, index) => {
+        htmlStr += `<div class="row ps-5 pe-5 pt-2 pb-2">
             <div class="col-2"></div>
-            <div class="col-10 text-end">
-                <embed src="" height="300px" id="file${fileCounter}">
-                <br />
+            <div class="col-10 text-end">`;
+        if (fileData.upload.files[index].contentType.slice(0, 5) == "image") {
+            htmlStr += `<a href="${ele}" target='_blank' download><img src="${ele}" height="300px" id="${ele}" /></a>`;
+            if (isGroup) {
+                document.getElementById(`${groupId}:LastMessage`).innerText = '🎞 File';
+            }
+            else {
+                document.getElementById(`${receiver}:lastMessage`).innerText = '🎞 File';
+            }
+        }
+        else {
+            htmlStr += `<embed src="${ele}" height="300px" id="${ele}" />`;
+            if (isGroup) {
+                document.getElementById(`${groupId}:LastMessage`).innerText = '🎞 File';
+            }
+            else {
+                document.getElementById(`${receiver}:lastMessage`).innerText = '🎞 File';
+            }
+        }
+        htmlStr += `<br />
                 <span style="padding:5px; font-size:13px; opacity: 0.7;">
                     ${currentTime.toLocaleTimeString('en-US', { hour12: false }).slice(0, 5)}
                 </span>
             </div>
         </div>`;
-        fileCounter++;
-    }
-    document.getElementById(`${receiver}:lastMessage`).innerText = '🎞 File';
-    for (let i = 0; i < fileCounter; i++) {
-        let fReader = new FileReader();
-        fReader.readAsDataURL(fileEle.files[i]);
-        fReader.onload = function (event) {
-            let img = document.getElementById(`file${i}`);
-            img.src = event.target.result;
-        }
-    }
+        /*fileCounter++;*/
+    });
+    messages.innerHTML += htmlStr;
+    messages.scrollTop = messages.scrollHeight;
+    messages.scrollIntoView();
     if (isGroup) {
-        //for (let i = 0; i < fileCounter; i++) {
-        //    document.getElementById(`file${i}`).src = fileData.urls[i];
-        //}
         await connection.invoke("SendFileToGroup", fileData.upload, fileData.urls);
     }
     else if (receiver != 0) {
-        //for (let i = 0; i < fileCounter; i++) {
-        //    document.getElementById(`file${i}`).src = fileData.urls[i];
-        //}
         await connection.invoke("SendFile", fileData.upload, fileData.urls);
     }
+    
 }

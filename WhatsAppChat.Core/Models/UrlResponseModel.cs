@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace WhatsAppChat.Core.Models
 {
-	public class ApiObjectModel
+	public class UrlResponseModel
 	{
-		public UrlResponseModel? Urls { get; set; }
-		public FIleUploadModel? Upload { get; set; }
+		public List<string>? urls {  get; set; }
+		public List<string>? type { get; set; }
 	}
 }

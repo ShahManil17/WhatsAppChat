@@ -145,41 +145,47 @@ namespace WhatsAppChat.Core
 			}
 		}
 
-		public async Task SendFile(object model, List<string>? urls)
+		public async Task SendFile(object model, object urls)
 		{
 			try
 			{
 				string? stringModel = model.ToString();
-				if(stringModel != null)
+				string? urlString = urls.ToString();
+				if (stringModel != null)
 				{
 					tempResponseModel? data = JsonSerializer.Deserialize<tempResponseModel>(stringModel);
-					if(data != null)
+					UrlResponseModel? urlModel = JsonSerializer.Deserialize<UrlResponseModel>(urlString);
+					if (data != null)
 					{
 						var user = _context.Users
 							.Where(x => x.Id == data.receiverId)
 							.FirstOrDefault();
 
-						//if (urls != null && urls.Any())
-						//{
-						//	foreach (var item in urls)
-						//	{
-						//		Communication communication = new Communication()
-						//		{
-						//			SendTime = DateTime.Now,
-						//			IsRead = 0,
-						//			IsDelivered = user?.ConnectionId == null ? 0 : 1,
-						//			FilePath = item,
-						//			SenderId = data.senderId,
-						//			ReceiverId = data.receiverId
-						//		};
-						//		await _context.Communication.AddAsync(communication);
-						//	}
-						//	await _context.SaveChangesAsync();
-						//}
+						if (urlModel != null && urlModel.urls.Any())
+						{
+							int counter = 0;
+							foreach (var item in urlModel.urls)
+							{
+								Communication communication = new Communication()
+								{
+									SendTime = DateTime.Now,
+									IsRead = 0,
+									IsDelivered = user?.ConnectionId == null ? 0 : 1,
+									Message = "🎞 File",
+									FilePath = item,
+									FileType = urlModel.type?[counter],
+									SenderId = data.senderId,
+									ReceiverId = data.receiverId
+								};
+								await _context.Communication.AddAsync(communication);
+								counter++;
+							}
+							await _context.SaveChangesAsync();
+						}
 						if (user?.ConnectionId != null)
 						{
 							Console.WriteLine(user.ConnectionId);
-							await Clients.Client(user.ConnectionId).SendAsync("ReceiveFile", data.senderId, _contextAccessor.HttpContext?.Request.Cookies["userId"], urls);
+							await Clients.Client(user.ConnectionId).SendAsync("ReceiveFile", data.senderId, _contextAccessor.HttpContext?.Request.Cookies["userId"], urlModel);
 						}
 					}
 				}
@@ -191,16 +197,18 @@ namespace WhatsAppChat.Core
 			
 		}
 
-		public async Task SendFileToGroup(object model, List<string>? urls)
+		public async Task SendFileToGroup(object model, object urls)
 		{
 			int userId = Convert.ToInt32(_contextAccessor.HttpContext?.Request.Cookies["userId"]);
 
 			try
 			{
 				string? stringModel = model.ToString();
-				if (stringModel != null)
+				string? urlString = urls.ToString();
+				if (stringModel != null && urlString != null)
 				{
 					tempResponseModel? data = JsonSerializer.Deserialize<tempResponseModel>(stringModel);
+					UrlResponseModel? urlModel = JsonSerializer.Deserialize<UrlResponseModel>(urlString);
 					if (data != null)
 					{
 						// Add File To GroupMessages
@@ -214,48 +222,53 @@ namespace WhatsAppChat.Core
 							.Join(_context.GroupHasMembers, t1 => t1.Id, t2 => t2.UserId, (t1, t2) => new { t1, t2 })
 							.Where(t => t.t2.GroupId == data.groupId)
 							.ToList();
-						//if (urls != null && urls.Any())
-						//{
-						//	foreach (var item in urls)
-						//	{
-						//		Data.DataModel.GroupMessages groupMessage = new Data.DataModel.GroupMessages()
-						//		{
-						//			SendTime = DateTime.Now,
-						//			IsRead = 0,
-						//			IsDelivered = 0,
-						//			FilePath = item,
-						//			SenderId = data.senderId,
-						//			GroupId = data.groupId
-						//		};
-						//		_context.GroupMessages.Add(groupMessage);
-						//		_context.SaveChanges();
-						//		if (groupData != null)
-						//		{
-						//			foreach (var userItem in userDelatils)
-						//			{
-						//				if (userItem.t1.ConnectionId == null)
-						//				{
-						//					var unreadMessages = new GroupUnreads()
-						//					{
-						//						MessageId = groupMessage.Id,
-						//						UserId = userItem.t1.Id,
-						//						GroupId = data.groupId
-						//					};
-						//					_context.GroupUnreads.Add(unreadMessages);
-						//					_context.SaveChanges();
-						//				}
-						//			}
-						//		}
-						//	}
-						await Clients.Group(groupData.GroupName).SendAsync("ReceiveFromGroup", Convert.ToInt32(_contextAccessor.HttpContext?.Request.Cookies["userId"]), userName?.UserName, data.groupId, urls);
+						if (urlModel != null && urlModel.urls.Any())
+						{
+							int counter = 0;
+							foreach (var item in urlModel.urls)
+							{
+								Data.DataModel.GroupMessages groupMessage = new Data.DataModel.GroupMessages()
+								{
+									SendTime = DateTime.Now,
+									IsRead = 0,
+									IsDelivered = 0,
+									Message = "🎞 File",
+									FilePath = item,
+									FileType = urlModel.type?[counter],
+									SenderId = data.senderId,
+									GroupId = data.groupId
+								};
+								_context.GroupMessages.Add(groupMessage);
+								_context.SaveChanges();
+								if (groupData != null)
+								{
+									foreach (var userItem in userDelatils)
+									{
+										if (userItem.t1.ConnectionId == null)
+										{
+											var unreadMessages = new GroupUnreads()
+											{
+												MessageId = groupMessage.Id,
+												UserId = userItem.t1.Id,
+												GroupId = data.groupId
+											};
+											_context.GroupUnreads.Add(unreadMessages);
+											_context.SaveChanges();
+										}
+									}
+								}
+								counter++;
+							}
+							await Clients.Group(groupData.GroupName).SendAsync("ReceiveFromGroup", Convert.ToInt32(_contextAccessor.HttpContext?.Request.Cookies["userId"]), userName?.UserName, data.groupId, urlModel);
 						}
 					}
 				}
-				catch(Exception ex)
-				{
-					Console.WriteLine(ex.Message);
-				}
 			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+			}
+		}
 
 		public override Task OnDisconnectedAsync(Exception? exception)
 		{

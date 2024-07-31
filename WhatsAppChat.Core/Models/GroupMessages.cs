@@ -16,5 +16,7 @@ namespace WhatsAppChat.Core.Models
 		public DateTime? SendTime { get; set; }
 		public string? GroupId { get; set; }
 		public string? UserName { get; set; }
+		public string? FilePath { get; set; }
+		public string? FileType {  get; set; }
 	}
 }

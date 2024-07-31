@@ -12,6 +12,7 @@ namespace WhatsAppChat.Data.DataModel
         public int? IsRead {  get; set; }
         public int? IsDelivered { get; set; }
         public string? FilePath { get; set; }
+        public string? FileType { get; set; }
         public int? SenderId { get; set; }
         public virtual Users? Sender { get; set; }
         public string? GroupId { get; set; }

@@ -10,8 +10,7 @@ namespace WhatsAppChat.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-			var sp = @"CREATE OR ALTER PROCEDURE [dbo].[getUsersExcept] 3
-            @id INT
+			var sp = @"CREATE OR ALTER PROCEDURE [dbo].[getUsersExcept] @id INT
             AS
             BEGIN
 	            SELECT u.*,
