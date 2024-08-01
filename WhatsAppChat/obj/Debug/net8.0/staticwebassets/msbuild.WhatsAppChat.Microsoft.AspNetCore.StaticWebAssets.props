@@ -1056,6 +1056,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\4ac95e58-e715-4cdf-927a-13003e63de24Screenshot (10).png))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\57b8bb13-5b2b-4b7c-86f2-6f10fab70fc8Screenshot (17).png))">
+      <SourceType>Package</SourceType>
+      <SourceId>WhatsAppChat</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WhatsAppChat</BasePath>
+      <RelativePath>uploads/57b8bb13-5b2b-4b7c-86f2-6f10fab70fc8Screenshot (17).png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\57b8bb13-5b2b-4b7c-86f2-6f10fab70fc8Screenshot (17).png))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\7cf112e9-9eb8-49e3-ba60-74b6a7ac8ed3Screenshot (13).png))">
       <SourceType>Package</SourceType>
       <SourceId>WhatsAppChat</SourceId>

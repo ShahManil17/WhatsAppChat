@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Mcw3/JOVxdtUc3P5FWHQT/Cb6vDBvg7ADH5oXcDaSIo=",
+  "Hash": "Lk9KJmzd7dVmSWoe27NEODoC07PO80YqV5+XB1qiIog=",
   "Source": "WhatsAppChat",
   "BasePath": "_content/WhatsAppChat",
   "Mode": "Default",
@@ -1307,6 +1307,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\4ac95e58-e715-4cdf-927a-13003e63de24Screenshot (10).png"
+    },
+    {
+      "Identity": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\uploads\\57b8bb13-5b2b-4b7c-86f2-6f10fab70fc8Screenshot (17).png",
+      "SourceId": "WhatsAppChat",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\",
+      "BasePath": "_content/WhatsAppChat",
+      "RelativePath": "uploads/57b8bb13-5b2b-4b7c-86f2-6f10fab70fc8Screenshot (17).png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\57b8bb13-5b2b-4b7c-86f2-6f10fab70fc8Screenshot (17).png"
     },
     {
       "Identity": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat\\wwwroot\\uploads\\7cf112e9-9eb8-49e3-ba60-74b6a7ac8ed3Screenshot (13).png",

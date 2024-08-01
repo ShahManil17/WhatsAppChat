@@ -27,6 +27,30 @@ connection.on('newMessage', async (sender, rec, messageText) => {
             </div>`;
             globalDay = -1;
         }
+        if (document.getElementById(`${receiver}:lastMessage`)) {
+            document.getElementById(`${rec}:lastMessage`).innerText = messageText;
+        }
+        else {
+            let userResponse = await fetch(`/Services/getSingleUser?id=${receiver}`);
+            let userData = await userResponse.json();
+            if (document.getElementById('users').innerHTML) {
+                document.getElementById('users').innerHTML += `<hr />`
+            }
+            document.getElementById('users').innerHTML += `<div class="row userHover" style="align-items:center" onclick="displayChat(${userData.id})">
+                <div class="col-2 ps-4">
+					<img src="${userData.profileImage.split('wwwroot')[1]}" style="border-radius: 100%" height="50px" width="50px">
+				</div>
+				<div class="col-8 ps-4">
+					<b style="font-size:20px">${userData.userName}</b> <br />
+					<span style="padding:5px; font-size:16px; opacity: 0.7;" id="${userData.id}:lastMessage">
+						${messageText}
+					</span>
+				</div>
+                <div class="col-2 pe-2">
+                    <span style="border-radius:50%; background-color:green; color:white" id="${userData.id}"></span>
+                </div>
+            </div>`;
+        }
         messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2" style="align-items:end">
             <div class="col-10" style="overflow-wrap: anywhere;">
             <span style="background-color: rgb(240, 255, 255, 0.6); padding:5px; border-radius:10px">${messageText}</span>
@@ -37,20 +61,42 @@ connection.on('newMessage', async (sender, rec, messageText) => {
             </div>
             <div class="col-2"></div>
         </div>`;
-        document.getElementById(`${rec}:lastMessage`).innerText = messageText;
     }
     else {
-        const numberEle = document.getElementById(`${rec}`);
-        if (numberEle.innerText == '') {
-            numberEle.style.padding = '5px';
-            numberEle.innerText = '1';
+        if (document.getElementById(`${rec}:lastMessage`)) {
+            const numberEle = document.getElementById(`${rec}`);
+            if (numberEle.innerText == '') {
+                numberEle.style.padding = '2px 7px 4px 7px';
+                numberEle.innerText = '1';
 
-            // Display Last Message
-            document.getElementById(`${rec}:lastMessage`).innerText = messageText;
+                // Display Last Message
+                document.getElementById(`${rec}:lastMessage`).innerText = messageText;
+            }
+            else {
+                numberEle.innerText = `${Number(numberEle.innerText) + 1}`;
+                document.getElementById(`${rec}:lastMessage`).innerText = messageText;
+            }
         }
         else {
-            numberEle.innerText = `${Number(numberEle.innerText) + 1}`;
-            document.getElementById(`${rec}:lastMessage`).innerText = messageText;
+            let userResponse = await fetch(`/Services/getSingleUser?id=${rec}`);
+            let userData = await userResponse.json();
+            if (document.getElementById('users').innerHTML) {
+                document.getElementById('users').innerHTML += `<hr />`
+            }
+            document.getElementById('users').innerHTML += `<div class="row userHover" style="align-items:center" onclick="displayChat(${userData.id})">
+                <div class="col-2 ps-4">
+					<img src="${userData.profileImage.split('wwwroot')[1]}" style="border-radius: 100%" height="50px" width="50px">
+				</div>
+				<div class="col-8 ps-4">
+					<b style="font-size:20px">${userData.userName}</b> <br />
+					<span style="padding:5px; font-size:16px; opacity: 0.7;" id="${userData.id}:lastMessage">
+						${messageText}
+					</span>
+				</div>
+                <div class="col-2 pe-2">
+                    <span style="border-radius:50%; background-color:green; color:white; padding:2px 7px 4px 7px" id="${userData.id}">1</span>
+                </div>
+            </div>`;
         }
     }
     messages.scrollTop = messages.scrollHeight;
@@ -88,7 +134,7 @@ connection.on('SendToGroup', async (senderId, senderName, group, message) => {
         let response = await fetch(`/Services/AddInGroupUnreads?senderId=${sender}&groupId=${group}`);
         const numberEle = document.getElementById(`${group}`);
         if (numberEle.innerText == '') {
-            numberEle.style.padding = '5px';
+            numberEle.style.padding = '2px 7px 4px 7px';
             numberEle.innerText = '1';
             document.getElementById(`${group}:LastMessage`).innerText = message;
         }
@@ -141,7 +187,7 @@ connection.on("ReceiveFile", async (sender, rec, urls) => {
     else {
         const numberEle = document.getElementById(`${rec}`);
         if (numberEle.innerText == '') {
-            numberEle.style.padding = '5px';
+            numberEle.style.padding = '2px 7px 4px 7px';
             numberEle.innerText = `${urls.urls.length}`;
         }
         else {
@@ -202,7 +248,7 @@ connection.on("ReceiveFromGroup", async (senderId, senderName, group, urls) => {
 
         const numberEle = document.getElementById(`${group}`);
         if (numberEle.innerText == '') {
-            numberEle.style.padding = '5px';
+            numberEle.style.padding = '2px 7px 4px 7px';
             numberEle.innerText = `${urls.urls.length}`;
         }
         else {
@@ -216,7 +262,7 @@ connection.on("ReceiveFromGroup", async (senderId, senderName, group, urls) => {
     messages.scrollIntoView();
 });
 
- function send() {
+ async function send() {
     const message = messageBox.value;
     if (isGroup == false && receiver == 0) {
         alert('Please select the User or Group to chat with!');
@@ -254,30 +300,70 @@ connection.on("ReceiveFromGroup", async (senderId, senderName, group, urls) => {
             </div>`;
             globalDay = -1;
         }
-        messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
-            <div class="col-2"></div>
-            <div class="col-10 text-end" style="overflow-wrap: anywhere;">
-                <span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px">${message}</span>
-                <br />
-                <span style="padding:5px; font-size:13px; opacity: 0.7;">
-                    ${currentTime.toLocaleTimeString('en-US', { hour12: false }).slice(0, 5)}
-                </span>
-            </div>
-        </div>`;
-        document.getElementById(`${receiver}:lastMessage`).innerText = message;
-        messageBox.value = '';
+        if(document.getElementById(`${receiver}:lastMessage`)) {
+            messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
+                <div class="col-2"></div>
+                <div class="col-10 text-end" style="overflow-wrap: anywhere;">
+                    <span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px">${message}</span>
+                    <br />
+                    <span style="padding:5px; font-size:13px; opacity: 0.7;">
+                        ${currentTime.toLocaleTimeString('en-US', { hour12: false }).slice(0, 5)}
+                    </span>
+                </div>
+            </div>`;
+            document.getElementById(`${receiver}:lastMessage`).innerText = message;
+            messageBox.value = '';
+        }
+        else {
+            let userResponse = await fetch(`/Services/getSingleUser?id=${receiver}`);
+            let userData = await userResponse.json();
+            if (document.getElementById('users').innerHTML) {
+                document.getElementById('users').innerHTML += `<hr />`
+            }
+            document.getElementById('users').innerHTML += `<div class="row userHover" style="align-items:center" onclick="displayChat(${userData.id})">
+                <div class="col-2 ps-4">
+					<img src="${userData.profileImage.split('wwwroot')[1]}" style="border-radius: 100%" height="50px" width="50px">
+				</div>
+				<div class="col-8 ps-4">
+					<b style="font-size:20px">${userData.userName}</b> <br />
+					<span style="padding:5px; font-size:16px; opacity: 0.7;" id="${userData.id}:lastMessage">
+						${message}
+					</span>
+				</div>
+                <div class="col-2 pe-2">
+                    <span style="border-radius:50%; background-color:green; color:white" id="${userData.id}"></span>
+                </div>
+            </div>`;
+            messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
+                <div class="col-2"></div>
+                <div class="col-10 text-end" style="overflow-wrap: anywhere;">
+                    <span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px">${message}</span>
+                    <br />
+                    <span style="padding:5px; font-size:13px; opacity: 0.7;">
+                        ${currentTime.toLocaleTimeString('en-US', { hour12: false }).slice(0, 5)}
+                    </span>
+                </div>
+            </div>`;
+            messageBox.value = '';
+
+        }
     }
     messages.scrollTop = messages.scrollHeight;
     messages.scrollIntoView();
 }
 
 async function displayChat(id) {
+    document.getElementById('searchSuggetion').innerHTML = '';
+    document.getElementById('searchResult').value = '';
+
     let temp = new Date().toLocaleDateString();
     const currentDate = new Date(temp);
     isGroup = false;
     const numberEle = document.getElementById(`${id}`);
-    numberEle.style.padding = '0';
-    numberEle.innerText = '';
+    if (numberEle) {
+        numberEle.style.padding = '0';
+        numberEle.innerText = '';
+    }
     const sender = ('; ' + document.cookie).split(`; userId=`).pop().split(';')[0];
 
     // Mark every messages as read
@@ -363,7 +449,7 @@ async function displayChat(id) {
                     }
                 }
                 else if (ele.message != null) {
-                    messageString += `<span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px">${ele.message}</span>`;
+                    messageString += `<span style="background-color: rgb(240, 255, 255, 0.6); padding:5px; border-radius:10px">${ele.message}</span>`;
                 }
                 messageString += `<br/>
                         <span style="padding:5px; font-size:13px; opacity: 0.7;">
@@ -417,6 +503,9 @@ async function displayForm() {
 }
 
 async function displaygroupChat(id) {
+    document.getElementById('searchSuggetion').innerHTML = '';
+    document.getElementById('searchResult').value = '';
+
     isGroup = true;
     let temp = new Date().toLocaleDateString();
     const currentDate = new Date(temp);
@@ -537,7 +626,8 @@ function changeProfileImage() {
 }
 
 async function editProfile(id) {
-    let EditProfileRes = await fetch(`/Services/getSingleUser`);
+    const sender = ('; ' + document.cookie).split(`; userId=`).pop().split(';')[0];
+    let EditProfileRes = await fetch(`/Services/getSingleUser?id=${Number(sender)}`);
     let EditProfileData = await EditProfileRes.json();
     profImage = EditProfileData.profileImage.split('wwwroot/');
     Swal.fire({
@@ -545,7 +635,7 @@ async function editProfile(id) {
         html: `<form action="/Services/editProfile" method="post" enctype="multipart/form-data" style="text-align:left">
             <input type="number" name="Id" value="${EditProfileData.id}" hidden>
             <label for="userProfile" style="width:100%; text-align:center">
-                <img src='${profImage[profImage.length - 1]}' id="image" style="height:170px; border-radius:10px;"/>
+                <img src='${profImage[profImage.length - 1]}' id="image" style="height: 220px; width: 240px; border-radius: 50%;"/>
             </label>
             <input type="file" id="userProfile" name="ProfileImage" onchange="changeProfileImage()" hidden/>
             <br /><br />
@@ -706,4 +796,41 @@ async function getValue() {
         await connection.invoke("SendFile", fileData.upload, fileData.urls);
     }
     
+}
+
+function removeSuggetion() {
+    document.getElementById('searchSuggetion').style.visibility = 'hidden';
+}
+
+function showSuggetion() {
+    document.getElementById('searchSuggetion').style.visibility = 'visible';
+}
+
+async function search() {
+    const sender = ('; ' + document.cookie).split(`; userId=`).pop().split(';')[0];
+    let suggetionEle = document.getElementById('searchSuggetion');
+    let searchText = document.getElementById('searchResult').value.trim();
+    if (searchText != '') {
+        let searchResponse = await fetch(`/Services/getSearchResult?name=${searchText}`);
+        const searchResult = await searchResponse.json();
+        console.log(searchResult);
+        suggetionEle.innerHTML = '';
+        searchResult.forEach((ele) => {
+            if (ele.userId != Number(sender)) {
+                suggetionEle.innerHTML += `<div class="row p-2" style="align-items:center; width:100%; margin:0 2px;" onclick="getSearchResult(${ele.userId})">
+					<div class="col-3 text-center"><img src="${ele.profileImage.split('wwwroot')[1]}" style="border-radius:50%;" height="50px" width="55px" /></div>
+					<div class="col-9" style="font-size: 25px; margin:-2px 0 0 -15px;">${ele.name}</div>
+				</div>`;
+            }
+        });
+    }
+    else {
+        document.getElementById('searchSuggetion').innerHTML = '';
+    }
+}
+
+async function getSearchResult(id) {
+    document.getElementById('searchSuggetion').innerHTML = '';
+    document.getElementById('searchResult').value = '';
+    displayChat(id);
 }

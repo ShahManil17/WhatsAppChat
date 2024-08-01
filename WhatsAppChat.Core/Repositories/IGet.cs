@@ -17,5 +17,6 @@ namespace WhatsAppChat.Core.Repositories
         public Task<bool> AddInGroupUnreads(int senderId, string groupId);
         public Task<List<GroupMembers>?> GetGroupMembers(string? groupId);
         public Task<bool> RemoveFromGroup(int? userId, string? groupId);
+        public Task<List<SearchResultModel>?> GetSearchResult(string name);
 	}
 }

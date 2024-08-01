@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using WhatsAppChat.Core.Models;
 using WhatsAppChat.Data;
 using WhatsAppChat.Data.DataModel;
@@ -154,6 +155,19 @@ namespace WhatsAppChat.Core.Repositories.Implementations
             catch
             {
                 return false;
+            }
+        }
+		public async Task<List<SearchResultModel>?> GetSearchResult(string name)
+        {
+            try
+            {
+                name = $"{name}%";
+				var data = _context.Database.SqlQuery<SearchResultModel>($"exec getSearchResult {name}").ToList();
+				return data;
+			}
+            catch
+            {
+                return null;
             }
         }
 	}

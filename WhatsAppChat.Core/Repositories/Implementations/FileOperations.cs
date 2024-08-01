@@ -40,7 +40,7 @@ namespace WhatsAppChat.Core.Repositories.Implementations
 								BlobName = fileName,
 								Resource = "b",
 								StartsOn = DateTime.UtcNow.AddMinutes(-2),
-								ExpiresOn = DateTime.UtcNow.AddMinutes(2880),
+								ExpiresOn = DateTime.UtcNow.AddDays(30),
 							};
 							sasBuilder.SetPermissions(BlobSasPermissions.Read);
 

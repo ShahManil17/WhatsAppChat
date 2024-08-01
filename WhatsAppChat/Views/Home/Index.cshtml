@@ -4,14 +4,14 @@
 <div class="wrap" style="width: 100%;">
 	<section class="left">
 		<div class="profile row" style="align-items: center">
-			<div class="col text-center" onclick="editProfile()">
+			<div class="col text-center" id="userProfile" onclick="editProfile()">
 				@if (ViewBag.CurrentUser != null)
 				{
-					<img src="@ViewBag.CurrentUser.ProfileImage" style="width: 60px; height: 50px;">
+					<img src="@ViewBag.CurrentUser.ProfileImage" alt="Profile" style="width: 60px; height: 50px;">
 				}
 				else
 				{
-					<img src="~/Assets/defaultImage.jpg" style="width: 60px; height: 50px;">
+					<img src="~/Assets/defaultImage.jpg" alt="Profile" style="width: 60px; height: 50px;">
 				}
 			</div>
 			<div class="col text-center" style="font-size: 25px; color: navy;">
@@ -26,58 +26,66 @@
 				<input type="button" value="Logout" class="btn btn-info" onclick="logOut()" />
 			</div>
 		</div>
-		@* <div class="wrap-search">
+		<div class="wrap-search">
 			<div class="search">
 				<i class="fa fa-search fa" aria-hidden="true"></i>
-				<input type="text" class="input-search" placeholder="Search">
+				<input type="text" class="input-search" id="searchResult" oninput="search()" @* onblur="removeSuggetion()" onfocus="showSuggetion()" *@ placeholder="Search" style="background-color:#E0E0E0" autocomplete="off">
 			</div>
-		</div> *@
+			<div id="searchSuggetion" style="z-index:1; position:relative; margin:0 11px; background-color: #F0F0F0" class="text-center suggetion">
+				
+			</div>
+		</div>
 		<div class="contact-list pt-3">
 			@if (ViewBag.AllUsers != null)
 			{
 				int counter = 0;
+				<div id="users">
 				@foreach(var item in ViewBag.AllUsers) {
-					@if(counter != 0)
+					@if (item.LastMessage != null)
 					{
-						<hr />
-					}
-					<div class="row userHover" style="align-items:center" onclick="displayChat(@item.Id)">
-						<div class="col-2 ps-4">
-							<img src="@item.ProfileImage" style="border-radius: 100%" height="50px" width="50px">
-						</div>
-						<div class="col-8 ps-4">
-							<b style="font-size:20px">@item.UserName</b> <br />
-							<span style="padding:5px; font-size:16px; opacity: 0.7;" id="@item.Id:lastMessage">
-								@if (item.LastMessage != null)
-								{
+						@if (counter != 0)
+						{
+							<hr />
+						}
+						<div class="row userHover" style="align-items:center; margin:2px" onclick="displayChat(@item.Id)">
+							<div class="col-3 ps-4">
+								<img src="@item.ProfileImage" style="border-radius: 100%" height="50px" width="50px">
+							</div>
+							<div class="col-7 ps-2 pt-1m pb-1">
+								<b style="font-size:20px">@item.UserName</b> <br />
+								<span style="padding:5px; font-size:16px; opacity: 0.7;" id="@item.Id:lastMessage">
 									@item.LastMessage
-								}
-							</span>
-						</div>
-						<div class="col-2 pe-2">
-							@if (ViewBag.unreadCount.Count > 0 && ViewBag.unreadCount[counter].Count != 0)
-							{
-								<span style="border-radius:50%; background-color:green; color:white; padding:5px" id="@item.Id">
-									@ViewBag.unreadCount[counter].Count
 								</span>
-							}
-							else
-							{
-								<span style="border-radius:50%; background-color:green; color:white" id="@item.Id"></span>
-							}
+							</div>
+							<div class="col-2 pe-2">
+								@if (ViewBag.unreadCount.Count > 0 && ViewBag.unreadCount[counter].Count != 0)
+								{
+									<span style="border-radius:50%; background-color:green; color:white; padding:2px 7px 4px 7px;" id="@item.Id">
+										@ViewBag.unreadCount[counter].Count
+									</span>
+								}
+								else
+								{
+									<span style="border-radius:50%; background-color:green; color:white" id="@item.Id"></span>
+								}
+							</div>
 						</div>
-					</div>
-					counter++;
+						counter++;
+					}
 				}
-				counter = 0;
+				</div>
+				<div id="groups">
+				@{
+					counter = 0;
+				}
 				@foreach (var item in ViewBag.groupData)
 				{
 					<hr />
-					<div class="row userHover" style="align-items:center" onclick="displaygroupChat('@item.Id')">
-						<div class="col-2 ps-4">
+					<div class="row userHover" style="align-items:center; margin:2px" onclick="displaygroupChat('@item.Id')">
+						<div class="col-3 ps-4">
 							<img src="@item.GroupIcon" style="border-radius: 100%" height="50px" width="50px">
 						</div>
-						<div class="col-8 ps-4">
+							<div class="col-7 ps-2 pt-1m pb-1">
 							<b style="font-size:20px">@item.GroupName</b> <br />
 							<span style="padding:5px; font-size:16px; opacity: 0.7;" id="@item.Id:LastMessage">
 								@if (item.LastMessage != null)
@@ -89,7 +97,7 @@
 						<div class="col-2 pe-2">
 							@if (ViewBag.GroupUnreadList.Count > 0 && ViewBag.GroupUnreadList[counter].Count != 0)
 							{
-								<span style="border-radius:50%; background-color:green; color:white; padding:5px" id="@item.Id">
+								<span style="border-radius:50%; background-color:green; color:white; padding:2px 7px 4px 7px;" id="@item.Id">
 									@ViewBag.GroupUnreadList[counter].Count
 								</span>
 							}
@@ -101,6 +109,7 @@
 					</div>
 					counter++;
 				}
+				</div>
 			}
 			
 			<div class="mt-4 pt-5 text-center">
@@ -111,7 +120,7 @@
 
 	<section class="right">
 		<div class="chat-head">
-			<img alt="profilepicture" id="chatProf" class="" style="height: 55px; width: 60px;" onclick="editMembers()">
+			<img alt="Profile" id="chatProf" class="" style="height: 55px; width: 60px;" onclick="editMembers()">
 			<div class="chat-name" onclick="editMembers()">
 				<h1 class="font-name" style="margin:0px" id="chatName"></h1>
 				<p class="font-online" style="margin:0px" id="chatStatus"></p>

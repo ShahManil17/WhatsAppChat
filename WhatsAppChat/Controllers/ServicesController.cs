@@ -37,11 +37,11 @@ namespace WhatsAppChat.Controllers
         }
 
         [HttpGet("getSingleUser")]
-		public async Task<Users?> GetSingleUser()
+		public async Task<Users?> GetSingleUser(int id)
         {
             try
             {
-                Users data = await _get.getCurrentUser(Convert.ToInt32(Request.Cookies["userId"]));
+                Users data = await _get.getCurrentUser(id);
 				return data;
 
             }
@@ -150,7 +150,14 @@ namespace WhatsAppChat.Controllers
 			return RedirectToAction("Index", "Home");
 		}
 
-        [HttpPost("SendFile")]
+        [HttpGet("getSearchResult")]
+        public async Task<List<SearchResultModel>?> GetSearchResult(string name)
+        {
+            List<SearchResultModel> data = await _get.GetSearchResult(name);
+            return data;
+        }
+
+		[HttpPost("SendFile")]
         public async Task<ApiObjectModel?> SendFileToUser(FIleUploadModel model)
         {
             try
