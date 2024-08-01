@@ -2,6 +2,7 @@
 let groupId = ``;
 let isGroup = false;
 let globalDay = 0;
+let hrCounter = 0;
 
 const messageBox = document.getElementById('messageBox');
 const messages = document.getElementById('messages');
@@ -33,10 +34,11 @@ connection.on('newMessage', async (sender, rec, messageText) => {
         else {
             let userResponse = await fetch(`/Services/getSingleUser?id=${receiver}`);
             let userData = await userResponse.json();
-            if (document.getElementById('users').innerHTML) {
-                document.getElementById('users').innerHTML += `<hr />`
+            if (document.getElementById('users').innerHTML != '\n\t\t\t\t' && hrCounter != 0) {
+                document.getElementById('users').innerHTML += `<hr />`;
             }
-            document.getElementById('users').innerHTML += `<div class="row userHover" style="align-items:center" onclick="displayChat(${userData.id})">
+            hrCounter++;
+            document.getElementById('users').innerHTML += `<div class="row userHover" style="align-items:center; margin:2px;" onclick="displayChat(${userData.id})">
                 <div class="col-2 ps-4">
 					<img src="${userData.profileImage.split('wwwroot')[1]}" style="border-radius: 100%" height="50px" width="50px">
 				</div>
@@ -80,10 +82,11 @@ connection.on('newMessage', async (sender, rec, messageText) => {
         else {
             let userResponse = await fetch(`/Services/getSingleUser?id=${rec}`);
             let userData = await userResponse.json();
-            if (document.getElementById('users').innerHTML) {
+            if (document.getElementById('users').innerHTML != '\n\t\t\t\t' && hrCounter != 0) {
                 document.getElementById('users').innerHTML += `<hr />`
             }
-            document.getElementById('users').innerHTML += `<div class="row userHover" style="align-items:center" onclick="displayChat(${userData.id})">
+            hrCounter++;
+            document.getElementById('users').innerHTML += `<div class="row userHover" style="align-items:center; margin:2px;" onclick="displayChat(${userData.id})">
                 <div class="col-2 ps-4">
 					<img src="${userData.profileImage.split('wwwroot')[1]}" style="border-radius: 100%" height="50px" width="50px">
 				</div>
@@ -317,10 +320,11 @@ connection.on("ReceiveFromGroup", async (senderId, senderName, group, urls) => {
         else {
             let userResponse = await fetch(`/Services/getSingleUser?id=${receiver}`);
             let userData = await userResponse.json();
-            if (document.getElementById('users').innerHTML) {
+            if (document.getElementById('users').innerHTML != '\n\t\t\t\t' && hrCounter != 0) {
                 document.getElementById('users').innerHTML += `<hr />`
             }
-            document.getElementById('users').innerHTML += `<div class="row userHover" style="align-items:center" onclick="displayChat(${userData.id})">
+            hrCounter++;
+            document.getElementById('users').innerHTML += `<div class="row userHover" style="align-items:center; margin:2px;" onclick="displayChat(${userData.id})">
                 <div class="col-2 ps-4">
 					<img src="${userData.profileImage.split('wwwroot')[1]}" style="border-radius: 100%" height="50px" width="50px">
 				</div>
@@ -597,7 +601,7 @@ async function displaygroupChat(id) {
                     }
                 }
                 else if (ele.message != null) {
-                    messageString += `<span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px">${ele.message}</span>`;
+                    messageString += `<span style="background-color:rgb(240, 255, 255, 0.6); padding:5px; border-radius:10px">${ele.message}</span>`;
                 }
                 messageString += `<br />
                         <span style="padding:5px; font-size:13px; opacity: 0.7;">

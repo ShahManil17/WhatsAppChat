@@ -36,6 +36,9 @@
 			</div>
 		</div>
 		<div class="contact-list pt-3">
+			@{
+				int hrCounter = 0;
+			}
 			@if (ViewBag.AllUsers != null)
 			{
 				int counter = 0;
@@ -43,10 +46,11 @@
 				@foreach(var item in ViewBag.AllUsers) {
 					@if (item.LastMessage != null)
 					{
-						@if (counter != 0)
+						@if (hrCounter != 0)
 						{
 							<hr />
 						}
+						hrCounter++;
 						<div class="row userHover" style="align-items:center; margin:2px" onclick="displayChat(@item.Id)">
 							<div class="col-3 ps-4">
 								<img src="@item.ProfileImage" style="border-radius: 100%" height="50px" width="50px">
@@ -70,8 +74,8 @@
 								}
 							</div>
 						</div>
-						counter++;
 					}
+					counter++;
 				}
 				</div>
 				<div id="groups">
@@ -80,7 +84,10 @@
 				}
 				@foreach (var item in ViewBag.groupData)
 				{
-					<hr />
+					@if(hrCounter != 0)
+					{
+						<hr />
+					}
 					<div class="row userHover" style="align-items:center; margin:2px" onclick="displaygroupChat('@item.Id')">
 						<div class="col-3 ps-4">
 							<img src="@item.GroupIcon" style="border-radius: 100%" height="50px" width="50px">
