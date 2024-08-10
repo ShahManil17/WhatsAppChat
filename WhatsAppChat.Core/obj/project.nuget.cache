@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6OdrhLraJ0o=",
+  "dgSpecHash": "3TOrGY7P4JE=",
   "success": true,
-  "projectFilePath": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat.Core\\WhatsAppChat.Core.csproj",
+  "projectFilePath": "C:\\Manil Shah\\GitFile\\WhatsAppChat\\WhatsAppChat\\WhatsAppChat.Core\\WhatsAppChat.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Manil Shah\\.nuget\\packages\\azure.core\\1.41.0\\azure.core.1.41.0.nupkg.sha512",
     "C:\\Users\\Manil Shah\\.nuget\\packages\\azure.identity\\1.12.0\\azure.identity.1.12.0.nupkg.sha512",

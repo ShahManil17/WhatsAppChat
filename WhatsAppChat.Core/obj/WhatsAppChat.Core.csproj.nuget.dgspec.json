@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat.Core\\WhatsAppChat.Core.csproj": {}
+    "C:\\Manil Shah\\GitFile\\WhatsAppChat\\WhatsAppChat\\WhatsAppChat.Core\\WhatsAppChat.Core.csproj": {}
   },
   "projects": {
-    "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat.Core\\WhatsAppChat.Core.csproj": {
+    "C:\\Manil Shah\\GitFile\\WhatsAppChat\\WhatsAppChat\\WhatsAppChat.Core\\WhatsAppChat.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat.Core\\WhatsAppChat.Core.csproj",
+        "projectUniqueName": "C:\\Manil Shah\\GitFile\\WhatsAppChat\\WhatsAppChat\\WhatsAppChat.Core\\WhatsAppChat.Core.csproj",
         "projectName": "WhatsAppChat.Core",
-        "projectPath": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat.Core\\WhatsAppChat.Core.csproj",
+        "projectPath": "C:\\Manil Shah\\GitFile\\WhatsAppChat\\WhatsAppChat\\WhatsAppChat.Core\\WhatsAppChat.Core.csproj",
         "packagesPath": "C:\\Users\\Manil Shah\\.nuget\\packages\\",
-        "outputPath": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat.Core\\obj\\",
+        "outputPath": "C:\\Manil Shah\\GitFile\\WhatsAppChat\\WhatsAppChat\\WhatsAppChat.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -33,8 +33,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat.Data\\WhatsAppChat.Data.csproj": {
-                "projectPath": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat.Data\\WhatsAppChat.Data.csproj"
+              "C:\\Manil Shah\\GitFile\\WhatsAppChat\\WhatsAppChat\\WhatsAppChat.Data\\WhatsAppChat.Data.csproj": {
+                "projectPath": "C:\\Manil Shah\\GitFile\\WhatsAppChat\\WhatsAppChat\\WhatsAppChat.Data\\WhatsAppChat.Data.csproj"
               }
             }
           }
@@ -105,14 +105,14 @@
         }
       }
     },
-    "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat.Data\\WhatsAppChat.Data.csproj": {
+    "C:\\Manil Shah\\GitFile\\WhatsAppChat\\WhatsAppChat\\WhatsAppChat.Data\\WhatsAppChat.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat.Data\\WhatsAppChat.Data.csproj",
+        "projectUniqueName": "C:\\Manil Shah\\GitFile\\WhatsAppChat\\WhatsAppChat\\WhatsAppChat.Data\\WhatsAppChat.Data.csproj",
         "projectName": "WhatsAppChat.Data",
-        "projectPath": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat.Data\\WhatsAppChat.Data.csproj",
+        "projectPath": "C:\\Manil Shah\\GitFile\\WhatsAppChat\\WhatsAppChat\\WhatsAppChat.Data\\WhatsAppChat.Data.csproj",
         "packagesPath": "C:\\Users\\Manil Shah\\.nuget\\packages\\",
-        "outputPath": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat.Data\\obj\\",
+        "outputPath": "C:\\Manil Shah\\GitFile\\WhatsAppChat\\WhatsAppChat\\WhatsAppChat.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

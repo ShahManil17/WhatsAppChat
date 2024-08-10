@@ -3899,11 +3899,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat.Data\\WhatsAppChat.Data.csproj",
+      "projectUniqueName": "C:\\Manil Shah\\GitFile\\WhatsAppChat\\WhatsAppChat\\WhatsAppChat.Data\\WhatsAppChat.Data.csproj",
       "projectName": "WhatsAppChat.Data",
-      "projectPath": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat.Data\\WhatsAppChat.Data.csproj",
+      "projectPath": "C:\\Manil Shah\\GitFile\\WhatsAppChat\\WhatsAppChat\\WhatsAppChat.Data\\WhatsAppChat.Data.csproj",
       "packagesPath": "C:\\Users\\Manil Shah\\.nuget\\packages\\",
-      "outputPath": "C:\\Manil Shah\\Work\\WhatsAppChat\\WhatsAppChat.Data\\obj\\",
+      "outputPath": "C:\\Manil Shah\\GitFile\\WhatsAppChat\\WhatsAppChat\\WhatsAppChat.Data\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
