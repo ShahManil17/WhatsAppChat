@@ -620,7 +620,7 @@ async function displaygroupChat(id) {
 }
 
 function changeProfileImage() {
-    const input = document.getElementById('userProfile');
+    const input = document.getElementById('editProfileImage');
     let fReader = new FileReader();
     fReader.readAsDataURL(input.files[0]);
     fReader.onload = function (event) {
@@ -638,10 +638,10 @@ async function editProfile(id) {
         title: 'Edit Profile',
         html: `<form action="/Services/editProfile" method="post" enctype="multipart/form-data" style="text-align:left">
             <input type="number" name="Id" value="${EditProfileData.id}" hidden>
-            <label for="userProfile" style="width:100%; text-align:center">
+            <label for="editProfileImage" style="width:100%; text-align:center">
                 <img src='${profImage[profImage.length - 1]}' id="image" style="height: 220px; width: 240px; border-radius: 50%;"/>
             </label>
-            <input type="file" id="userProfile" name="ProfileImage" onchange="changeProfileImage()" hidden/>
+            <input type="file" id="editProfileImage" name="ProfileImage" onchange="changeProfileImage()" hidden/>
             <br /><br />
             <label for="UserName" class="text-primary" style="text-align:left">UserName</label>
             <input type="text" name="UserName" value="${EditProfileData.userName}" class="form-control" id="UserName" disabled>

@@ -103,7 +103,7 @@ namespace WhatsAppChat.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterModel model)
         {
-
+            _logger.LogInformation("Log Test In Reg. Post");
             if(!ModelState.IsValid)
             {
                 return View();

@@ -8,6 +8,7 @@ using WhatsAppChat.Core.Repositories.Implementations;
 using WhatsAppChat.Core.Middleware;
 using WhatsAppChat.Core;
 using WhatsAppChat.Controllers;
+using Microsoft.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,13 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 
 //Custom Services
+WebHost.CreateDefaultBuilder(args).ConfigureLogging((hostingContext, logging) =>
+ {
+     logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+     logging.AddConsole();
+     logging.AddDebug();
+     logging.AddEventSourceLogger();
+ });
 builder.Services.AddTransient<IRegisters, Registers>();
 builder.Services.AddTransient<IGet, Get>();
 builder.Services.AddTransient<IPost, Post>();

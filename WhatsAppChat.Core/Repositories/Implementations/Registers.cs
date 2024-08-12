@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,11 +16,13 @@ namespace WhatsAppChat.Core.Repositories.Implementations
         private readonly ApplicationDbContext _context;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContext;
-        public Registers(ApplicationDbContext context, IConfiguration configuration, IHttpContextAccessor httpContext)
+		private readonly ILogger<Registers> _logger;
+		public Registers(ApplicationDbContext context, IConfiguration configuration, IHttpContextAccessor httpContext, ILogger<Registers> logger)
         {
             _context = context;
             _configuration = configuration;
             _httpContext = httpContext;
+            _logger = logger;
         }
         public async Task<bool> RegisterAsync(RegisterModel model)
         {
@@ -61,8 +64,9 @@ namespace WhatsAppChat.Core.Repositories.Implementations
 
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
+                _logger.LogInformation(ex.Message);
                 return false;
             }
         }
