@@ -7,16 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\firebase-messaging-sw.js" />
     <Content Remove="wwwroot\js\register.js" /> 
     <Content Remove="wwwroot\js\sweetalert2.min.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\firebase-messaging-sw.js" />
     <_ContentIncludedByDefault Remove="wwwroot\js\register.js" />
 	<_ContentIncludedByDefault Remove="wwwroot\js\sweetalert2.min.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\firebase-messaging-sw.js" />
     <None Include="wwwroot\js\sweetalert2.min.js" />
     <None Include="wwwroot\js\register.js" />
   </ItemGroup>

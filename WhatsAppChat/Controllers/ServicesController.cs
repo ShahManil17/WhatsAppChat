@@ -1,34 +1,28 @@
-﻿using Azure.Storage;
-using Azure.Storage.Blobs;
-using Azure.Storage.Sas;
+﻿using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
-using Microsoft.WindowsAzure.Storage.Blob;
-using NuGet.Protocol.Plugins;
-using System.IO;
-using WhatsAppChat.Core;
 using WhatsAppChat.Core.Models;
 using WhatsAppChat.Core.Repositories;
 using WhatsAppChat.Data.DataModel;
 
 namespace WhatsAppChat.Controllers
 {
-	[Route("[controller]")]
+    [Route("[controller]")]
     public class ServicesController : Controller
     {
         private readonly IGet _get;
         private readonly IPost _post;
         private readonly IFileOperations _fileIO;
+        private readonly INotifications _notifications;
         //private readonly IHubContext<Chat> _hubContext;
         //private readonly Chat _chat;
         BlobServiceClient _blobClient;
         BlobContainerClient _containerClient;
-        public ServicesController(IGet get, IPost post, IFileOperations fileIO, IConfiguration config/*, IHubContext<Chat> hubCintext, Chat chat*/)
+        public ServicesController(IGet get, IPost post, IFileOperations fileIO, INotifications Notifications, IConfiguration config/*, IHubContext<Chat> hubCintext, Chat chat*/)
         {
             _get = get;
             _post = post;
             _fileIO = fileIO;
+            _notifications = Notifications;
             //_hubContext = hubCintext;
             //_chat = chat;
             _blobClient = new BlobServiceClient(config.GetValue<string>("AsureConnectionString:ConnectionString"));
@@ -177,6 +171,12 @@ namespace WhatsAppChat.Controllers
             {
                 return null;
             }
+        }
+
+        [HttpGet("setFirebaseToken")]
+        public async Task<bool> SetFirebaseToken(int id, string Token)
+        {
+            return await _notifications.SetFirebaseToken(id, Token);
         }
     }
 }

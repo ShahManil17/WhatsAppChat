@@ -57,9 +57,18 @@
 							</div>
 							<div class="col-7 ps-2 pt-1m pb-1">
 								<b style="font-size:20px">@item.UserName</b> <br />
-								<span style="padding:5px; font-size:16px; opacity: 0.7;" id="@item.Id:lastMessage">
-									@item.LastMessage
-								</span>
+									@if (item.LastMessage.Length > 35)
+									{
+										<span style="padding:5px; font-size:16px; opacity: 0.7;" id="@item.Id:lastMessage">
+											@item.LastMessage.Substring(0, 35) ...
+										</span>
+									}
+									else
+									{
+										<span style="padding:5px; font-size:16px; opacity: 0.7;" id="@item.Id:lastMessage">
+										@item.LastMessage
+									</span>
+									}
 							</div>
 							<div class="col-2 pe-2">
 								@if (ViewBag.unreadCount.Count > 0 && ViewBag.unreadCount[counter].Count != 0)
@@ -94,12 +103,19 @@
 						</div>
 							<div class="col-7 ps-2 pt-1m pb-1">
 							<b style="font-size:20px">@item.GroupName</b> <br />
-							<span style="padding:5px; font-size:16px; opacity: 0.7;" id="@item.Id:LastMessage">
-								@if (item.LastMessage != null)
+								<span style="padding:5px; font-size:16px; opacity: 0.7;" id="@item.Id:LastMessage">
+								@if(item.LastMessage != null)
 								{
-									@item.LastMessage
+									if (item.LastMessage.Length > 35)
+									{
+											@item.LastMessage.Substring(0, 35)
+									}
+									else
+									{
+											@item.LastMessage
+									}
 								}
-							</span>
+								</span>
 						</div>
 						<div class="col-2 pe-2">
 							@if (ViewBag.GroupUnreadList.Count > 0 && ViewBag.GroupUnreadList[counter].Count != 0)

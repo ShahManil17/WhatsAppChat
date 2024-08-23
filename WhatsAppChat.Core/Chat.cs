@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FirebaseAdmin.Messaging;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using WhatsAppChat.Core.Models;
+using WhatsAppChat.Core.Repositories;
 using WhatsAppChat.Data;
 using WhatsAppChat.Data.DataModel;
 
@@ -13,10 +15,12 @@ namespace WhatsAppChat.Core
 	{
 		private readonly ApplicationDbContext _context;
 		private readonly IHttpContextAccessor _contextAccessor;
-		public Chat(ApplicationDbContext context, IHttpContextAccessor httpContext)
+		private readonly INotifications _notifications;
+		public Chat(ApplicationDbContext context, IHttpContextAccessor httpContext, INotifications notifications)
 		{
 			_context = context;
             _contextAccessor = httpContext;
+			_notifications = notifications;
 		}
 		public override Task OnConnectedAsync()
 		{
@@ -92,10 +96,14 @@ namespace WhatsAppChat.Core
 				};
 				_context.Communication.Add(communicationObj);
 				_context.SaveChanges();
-			}
-			if(user.ConnectionId != null)
-			{
-				await Clients.Client(user.ConnectionId).SendAsync("newMessage", userId, _contextAccessor.HttpContext?.Request.Cookies["userId"],  message);
+				if(user?.ConnectionId != null)
+				{
+					await Clients.Client(user.ConnectionId).SendAsync("newMessage", userId, _contextAccessor.HttpContext?.Request.Cookies["userId"],  message);
+					if(user.FirebaseToken != null)
+					{
+						await _notifications.PushNotification(user.FirebaseToken, user.UserName, message);
+					}
+				}
 			}
 		}
 
@@ -142,7 +150,16 @@ namespace WhatsAppChat.Core
 					}
                 }
                 await Clients.Group(groupData.GroupName).SendAsync("SendToGroup", Convert.ToInt32(_contextAccessor.HttpContext?.Request.Cookies["userId"]), userName?.UserName, groupId, message);
-			}
+                foreach (var item in userDelatils)
+                {
+                    if (item.t1.FirebaseToken != null && item.t1.Id != userId)
+                    {
+						string? FinalMessage = userName?.UserName + " : " + message;
+
+                        await _notifications.PushNotification(item.t1.FirebaseToken, groupData.GroupName, FinalMessage);
+					}
+                }
+            }
 		}
 
 		public async Task SendFile(object model, object urls)
@@ -186,7 +203,11 @@ namespace WhatsAppChat.Core
 						{
 							Console.WriteLine(user.ConnectionId);
 							await Clients.Client(user.ConnectionId).SendAsync("ReceiveFile", data.senderId, _contextAccessor.HttpContext?.Request.Cookies["userId"], urlModel);
-						}
+                            if (user.FirebaseToken != null)
+                            {
+                                await _notifications.PushNotification(user.FirebaseToken, user.UserName, "🎞 File");
+                            }
+                        }
 					}
 				}
 			}
@@ -260,7 +281,16 @@ namespace WhatsAppChat.Core
 								counter++;
 							}
 							await Clients.Group(groupData.GroupName).SendAsync("ReceiveFromGroup", Convert.ToInt32(_contextAccessor.HttpContext?.Request.Cookies["userId"]), userName?.UserName, data.groupId, urlModel);
-						}
+                            foreach (var item in userDelatils)
+                            {
+                                if (item.t1.FirebaseToken != null && item.t1.Id != userId)
+                                {
+                                    string? FinalMessage = userName?.UserName + " : " + "🎞 File";
+
+                                    await _notifications.PushNotification(item.t1.FirebaseToken, groupData.GroupName, FinalMessage);
+                                }
+                            }
+                        }
 					}
 				}
 			}
@@ -282,6 +312,7 @@ namespace WhatsAppChat.Core
 			{
 				data.ConnectionId = null;
 				data.LogoutTime = DateTime.Now;
+				data.FirebaseToken = null;
 				_context.Users.Update(data);
 				_context.SaveChanges();
 			}

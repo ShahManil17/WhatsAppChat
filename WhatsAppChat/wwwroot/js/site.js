@@ -17,6 +17,14 @@ connection.start()
     .then(() => console.log('Connected!'))
     .catch(console.error);
 
+var input = document.getElementById("messageBox");
+input.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        send();
+    }
+});
+
 connection.on('newMessage', async (sender, rec, messageText) => {
     if (rec == receiver && isGroup==false) {
         let response = await fetch(`${window.location.origin}/Services/markAsRead?senderId=${receiver}&receiverId=${Number(sender)}`);
@@ -29,7 +37,12 @@ connection.on('newMessage', async (sender, rec, messageText) => {
             globalDay = -1;
         }
         if (document.getElementById(`${receiver}:lastMessage`)) {
-            document.getElementById(`${rec}:lastMessage`).innerText = messageText;
+            if (messageText.length > 35) {
+                document.getElementById(`${rec}:lastMessage`).innerText = `${messageText.slice(0, 35)}...`
+            }
+            else {
+                document.getElementById(`${rec}:lastMessage`).innerText = messageText;
+            }
         }
         else {
             let userResponse = await fetch(`/Services/getSingleUser?id=${receiver}`);
@@ -45,17 +58,25 @@ connection.on('newMessage', async (sender, rec, messageText) => {
 				<div class="col-8 ps-4">
 					<b style="font-size:20px">${userData.userName}</b> <br />
 					<span style="padding:5px; font-size:16px; opacity: 0.7;" id="${userData.id}:lastMessage">
-						${messageText}
+						
 					</span>
 				</div>
                 <div class="col-2 pe-2">
                     <span style="border-radius:50%; background-color:green; color:white" id="${userData.id}"></span>
                 </div>
             </div>`;
+            if (messageText.length > 35) {
+                document.getElementById(`${userData.id}:lastMessage`).innerText = `${messageText.slice(0, 35)}...`;
+            }
+            else {
+                document.getElementById(`${userData.id}:lastMessage`).innerText = messageText;
+            }
         }
         messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2" style="align-items:end">
             <div class="col-10" style="overflow-wrap: anywhere;">
-            <span style="background-color: rgb(240, 255, 255, 0.6); padding:5px; border-radius:10px">${messageText}</span>
+            <span style="background-color: rgb(240, 255, 255, 0.6); padding:5px; border-radius:10px" class="newMsg">
+
+            </span>
             <br/>
             <span style="padding:5px; font-size:13px; opacity: 0.7;">
                 ${currentTime.toLocaleTimeString('en-US', { hour12: false }).slice(0, 5)}
@@ -63,6 +84,9 @@ connection.on('newMessage', async (sender, rec, messageText) => {
             </div>
             <div class="col-2"></div>
         </div>`;
+        let spanArray = document.getElementsByClassName('newMsg');
+        let spanEle = spanArray[spanArray.length - 1];
+        spanEle.innerText = messageText;
     }
     else {
         if (document.getElementById(`${rec}:lastMessage`)) {
@@ -72,11 +96,21 @@ connection.on('newMessage', async (sender, rec, messageText) => {
                 numberEle.innerText = '1';
 
                 // Display Last Message
-                document.getElementById(`${rec}:lastMessage`).innerText = messageText;
+                if (messageText.length > 35) {
+                    document.getElementById(`${rec}:lastMessage`).innerText = `${messageText.slice(0, 35)}...`;
+                }
+                else {
+                    document.getElementById(`${rec}:lastMessage`).innerText = messageText;
+                }
             }
             else {
                 numberEle.innerText = `${Number(numberEle.innerText) + 1}`;
-                document.getElementById(`${rec}:lastMessage`).innerText = messageText;
+                if (messageText.length > 35) {
+                    document.getElementById(`${rec}:lastMessage`).innerText = `${messageText.slice(0, 35)}...`;
+                }
+                else {
+                    document.getElementById(`${rec}:lastMessage`).innerText = messageText;
+                }
             }
         }
         else {
@@ -93,13 +127,19 @@ connection.on('newMessage', async (sender, rec, messageText) => {
 				<div class="col-8 ps-4">
 					<b style="font-size:20px">${userData.userName}</b> <br />
 					<span style="padding:5px; font-size:16px; opacity: 0.7;" id="${userData.id}:lastMessage">
-						${messageText}
+						
 					</span>
 				</div>
                 <div class="col-2 pe-2">
                     <span style="border-radius:50%; background-color:green; color:white; padding:2px 7px 4px 7px" id="${userData.id}">1</span>
                 </div>
             </div>`;
+            if (messageText.length > 35) {
+                document.getElementById(`${userData.id}:lastMessage`).innerText = `${messageText.slice(0, 35)}...`;
+            }
+            else {
+                document.getElementById(`${userData.id}:lastMessage`).innerText = messageText;
+            }
         }
     }
     messages.scrollTop = messages.scrollHeight;
@@ -120,8 +160,8 @@ connection.on('SendToGroup', async (senderId, senderName, group, message) => {
             }
             messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
                 <div class="col-10 text-start" style="overflow-wrap: anywhere;">
-                    <span style="background-color:rgb(240, 255, 255, 0.6); padding:5px; border-radius:10px">
-                        ${message}
+                    <span style="background-color:rgb(240, 255, 255, 0.6); padding:5px; border-radius:10px" class="newMsg">
+                        
                     </span>
                     <br />
                     <span style="padding:5px; font-size:13px; opacity: 0.7;">
@@ -130,7 +170,15 @@ connection.on('SendToGroup', async (senderId, senderName, group, message) => {
                 </div>
                 <div class="col-2"></div>
             </div>`;
-            document.getElementById(`${group}:LastMessage`).innerText = message;
+            let spanArray = document.getElementsByClassName('newMsg');
+            let spanEle = spanArray[spanArray.length - 1];
+            spanEle.innerText = message;
+            if (message.length > 35) {
+                document.getElementById(`${group}:LastMessage`).innerText = message.slice(0, 35);
+            }
+            else {
+                document.getElementById(`${group}:LastMessage`).innerText = message;
+            }
         }
     }
     else {
@@ -139,11 +187,21 @@ connection.on('SendToGroup', async (senderId, senderName, group, message) => {
         if (numberEle.innerText == '') {
             numberEle.style.padding = '2px 7px 4px 7px';
             numberEle.innerText = '1';
-            document.getElementById(`${group}:LastMessage`).innerText = message;
+            if (message.length > 35) {
+                document.getElementById(`${group}:LastMessage`).innerText = message.slice(0, 35);
+            }
+            else {
+                document.getElementById(`${group}:LastMessage`).innerText = message;
+            }
         }
         else {
             numberEle.innerText = `${Number(numberEle.innerText) + 1}`;
-            document.getElementById(`${group}:LastMessage`).innerText = message;
+            if (message.length > 35) {
+                document.getElementById(`${group}:LastMessage`).innerText = message.slice(0, 35);
+            }
+            else {
+                document.getElementById(`${group}:LastMessage`).innerText = message;
+            }
         }
     }
     messages.scrollTop = messages.scrollHeight;
@@ -283,7 +341,8 @@ connection.on("ReceiveFromGroup", async (senderId, senderName, group, urls) => {
         messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
             <div class="col-2"></div>
             <div class="col-10 text-end" style="overflow-wrap: anywhere;">
-                <span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px">${message}</span>
+                <span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px" class="newMsg">
+                </span>
                 <br />
                 <span style="padding:5px; font-size:13px; opacity: 0.7;">
                     ${currentTime.toLocaleTimeString('en-US', { hour12: false }).slice(0, 5)}
@@ -291,7 +350,15 @@ connection.on("ReceiveFromGroup", async (senderId, senderName, group, urls) => {
             </div>
         </div>`;
         messageBox.value = '';
-        document.getElementById(`${groupId}:LastMessage`).innerText = message;
+        let spanArray = document.getElementsByClassName('newMsg');
+        let spanEle = spanArray[spanArray.length - 1];
+        spanEle.innerText = message;
+        if (message.length > 35) {
+            document.getElementById(`${groupId}:LastMessage`).innerText = message.slice(0, 35);
+        }
+        else {
+            document.getElementById(`${groupId}:LastMessage`).innerText = message;
+        }
     }
     else {
         connection.invoke('SendMessage', receiver.toString(), message);
@@ -307,14 +374,24 @@ connection.on("ReceiveFromGroup", async (senderId, senderName, group, urls) => {
             messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
                 <div class="col-2"></div>
                 <div class="col-10 text-end" style="overflow-wrap: anywhere;">
-                    <span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px">${message}</span>
+                    <span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px" class="newMsg">
+                        
+                    </span>
                     <br />
                     <span style="padding:5px; font-size:13px; opacity: 0.7;">
                         ${currentTime.toLocaleTimeString('en-US', { hour12: false }).slice(0, 5)}
                     </span>
                 </div>
             </div>`;
-            document.getElementById(`${receiver}:lastMessage`).innerText = message;
+            let spanArray = document.getElementsByClassName('newMsg');
+            let spanEle = spanArray[spanArray.length - 1];
+            spanEle.innerText = message;
+            if (message.length > 35) {
+                document.getElementById(`${receiver}:lastMessage`).innerText = `${message.slice(0, 35)}...`;
+            }
+            else {
+                document.getElementById(`${receiver}:lastMessage`).innerText = message;
+            }
             messageBox.value = '';
         }
         else {
@@ -331,7 +408,7 @@ connection.on("ReceiveFromGroup", async (senderId, senderName, group, urls) => {
 				<div class="col-8 ps-4">
 					<b style="font-size:20px">${userData.userName}</b> <br />
 					<span style="padding:5px; font-size:16px; opacity: 0.7;" id="${userData.id}:lastMessage">
-						${message}
+						
 					</span>
 				</div>
                 <div class="col-2 pe-2">
@@ -348,6 +425,13 @@ connection.on("ReceiveFromGroup", async (senderId, senderName, group, urls) => {
                     </span>
                 </div>
             </div>`;
+            if (message.length > 35) {
+                document.getElementById(`${userData.id}:lastMessage`).innerText = `${message.slice(0, 35)}...`;
+            }
+            else {
+
+                document.getElementById(`${userData.id}:lastMessage`).innerText = message;
+            }
             messageBox.value = '';
 
         }
@@ -431,7 +515,9 @@ async function displayChat(id) {
                     }
                 }
                 else if (ele.message != null) {
-                    messageString += `<span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px">${ele.message}</span>`;
+                    messageString += `<span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px" class="dbMessage">
+
+                    </span>`;
                 }    
                 messageString += `<br/>
                     <span style="padding:5px; font-size:13px; opacity: 0.7;">
@@ -453,7 +539,9 @@ async function displayChat(id) {
                     }
                 }
                 else if (ele.message != null) {
-                    messageString += `<span style="background-color: rgb(240, 255, 255, 0.6); padding:5px; border-radius:10px">${ele.message}</span>`;
+                    messageString += `<span style="background-color: rgb(240, 255, 255, 0.6); padding:5px; border-radius:10px" class="dbMessage">
+
+                    </span>`;
                 }
                 messageString += `<br/>
                         <span style="padding:5px; font-size:13px; opacity: 0.7;">
@@ -465,10 +553,18 @@ async function displayChat(id) {
             }
         });
         messages.innerHTML = messageString;
+        let innerTextCounter = 0;
+        data.message.forEach((ele, index) => {
+            if (ele.message != "🎞 File") {
+                document.getElementsByClassName('dbMessage')[innerTextCounter].innerText = ele.message;
+                innerTextCounter++;
+            }
+        });
         globalDay = dateArr[dateArr.length - 1];
     }
     messages.scrollTop = messages.scrollHeight;
     messages.scrollIntoView();
+    document.getElementById('messageBox').focus();
 }
 
 async function logOut() {
@@ -502,6 +598,16 @@ async function displayForm() {
             ${userString}<br />
             <input type="submit" class="btn btn-primary" value="CREATE">
         </form>`,
+        showClass: {
+            popup: `
+              animate__faster
+            `
+        },
+        hideClass: {
+            popup: `
+              animate__faster
+            `
+        },
         showConfirmButton: false
     });
 }
@@ -562,7 +668,7 @@ async function displaygroupChat(id) {
                     messages.innerHTML += `<div class="row ps-5 pe-5 pt-2 pb-2">
                         <div class="col text-center" style="backgroud-color:yellow">
                             <span style="border-radius: 10px; padding: 3px; background-color: lavender;">${ele.sendTime.toString().slice(0, 10)}</span>
-                        </div>
+                        </div> 
                     </div>`;
                 }
             }
@@ -580,7 +686,9 @@ async function displaygroupChat(id) {
                     }
                 }
                 else if (ele.message != null) {
-                    messageString += `<span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px">${ele.message}</span>`;
+                    messageString += `<span style="background-color:rgb(220, 248, 198, 0.6); padding:5px; border-radius:10px" class="dbMessage">
+
+                    </span>`;
                 }
                 messageString += `<br/>
                         <span style="padding:5px; font-size:13px; opacity: 0.7;">
@@ -601,7 +709,9 @@ async function displaygroupChat(id) {
                     }
                 }
                 else if (ele.message != null) {
-                    messageString += `<span style="background-color:rgb(240, 255, 255, 0.6); padding:5px; border-radius:10px">${ele.message}</span>`;
+                    messageString += `<span style="background-color:rgb(240, 255, 255, 0.6); padding:5px; border-radius:10px" class="dbMessage">
+
+                    </span>`;
                 }
                 messageString += `<br />
                         <span style="padding:5px; font-size:13px; opacity: 0.7;">
@@ -613,6 +723,13 @@ async function displaygroupChat(id) {
             }
             messages.innerHTML += messageString;
             globalDay = dateArr[dateArr.length - 1];
+        });
+        let innerTextCounter = 0;
+        data.message.forEach((ele, index) => {
+            if (ele.message != "🎞 File") {
+                document.getElementsByClassName('dbMessage')[innerTextCounter].innerText = ele.message;
+                innerTextCounter++;
+            }
         });
     }
     messages.scrollTop = messages.scrollHeight;
@@ -656,6 +773,16 @@ async function editProfile(id) {
                 <input type="submit" class="btn btn-primary" value="CHANGE">
             </div>
         </form>`,
+        showClass: {
+            popup: `
+              animate__faster
+            `
+        },
+        hideClass: {
+            popup: `
+              animate__faster
+            `
+        },
         showConfirmButton: false
     });
 }
@@ -691,6 +818,16 @@ async function editMembers() {
         Swal.fire({
             title: 'Edit Group',
             html: htmlString,
+            showClass: {
+                popup: `
+                  animate__faster
+                `
+            },
+            hideClass: {
+                popup: `
+                  animate__faster
+                `
+            },
             confirmButtonText: 'Add Member'
         }).then(async (result) => {
             if (result.isConfirmed) {
@@ -718,6 +855,16 @@ async function editMembers() {
                         <br /><br />
                         <input type="submit" value="ADD" class="btn btn-primary">
                     </form>`,
+                    showClass: {
+                        popup: `
+                          animate__faster
+                        `
+                    },
+                    hideClass: {
+                        popup: `
+                          animate__faster
+                        `
+                    },
                     showConfirmButton: false
                 });
             }

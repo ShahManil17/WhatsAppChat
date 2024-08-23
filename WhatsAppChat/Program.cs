@@ -28,6 +28,7 @@ builder.Services.AddTransient<IRegisters, Registers>();
 builder.Services.AddTransient<IGet, Get>();
 builder.Services.AddTransient<IPost, Post>();
 builder.Services.AddTransient<IFileOperations, FileOperations>();
+builder.Services.AddTransient<INotifications, Notifications>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {

@@ -19,6 +19,82 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0/firebase-messaging-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0/firebase-analytics-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyClvLAKa1kFHqjKW6N82lx9yIFiqk2731s",
+            authDomain: "whatsappchat-843ef.firebaseapp.com",
+            projectId: "whatsappchat-843ef",
+            storageBucket: "whatsappchat-843ef.appspot.com",
+            messagingSenderId: "384308968125",
+            appId: "1:384308968125:web:db31718fa907bd7e5095d4",
+            measurementId: "G-16172BGRPN"
+        };
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        console.log(app);
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./firebase-messaging-sw.js')
+                .then((registration) => {
+                    console.log(registration, "registration")
+                    console.log('Service Worker registered with scope:', registration.scope);
+
+                    // Initialize Firebase Messaging and use the registered service worker
+                    const messaging = firebase.messaging();
+                    console.log(messaging, "messaging")
+
+                    // Request permission to send notifications
+                    return Notification.requestPermission();
+                })
+                .then((permission) => {
+                    if (permission === 'granted') {
+                        console.log('Notification permission granted.');
+
+                        // Get FCM token
+                        const messaging = firebase.messaging();
+                        console.log(messaging)
+                        return messaging.getToken({
+                            vapidKey: 'BE_otnE3lx4jeXkfXTUm2U-mbx_gKGajrElkSkWtM0Myfm36iC7Tv_KT2l97YiwAWfNJjMqT1QWmrKpLa-S4MB4'
+                        });
+                    } else {
+                        console.warn('Notification permission denied.');
+                        throw new Error('Notification permission denied');
+                    }
+                })
+                .then(async (token) => {
+                    console.log("Token is : " + token);
+                    const sender = ('; ' + document.cookie).split(`; userId=`).pop().split(';')[0];
+                    let result = await fetch(`/Services/setFirebaseToken?id=${sender}&Token=${token}`);
+                    let data = await result.json();
+                    console.log(data);
+                    console.log('FCM Token:', token);
+                    // You can now send this token to your server and use it to send notifications
+                })
+                .catch((error) => {
+                    console.error('Service Worker registration or token retrieval failed:', error);
+                });
+
+            console.log("fdsfasdf");
+            // Handle incoming messages when the app is in the foreground
+            const messaging = firebase.messaging();
+            messaging.onMessage((payload) => {
+                console.log(payload)
+                console.log('Message received. ', payload);
+                // Customize how you want to display the notification in the foreground
+                const notificationTitle = payload.notification.title;
+                const notificationOptions = {
+                    body: payload.notification.body,
+                    icon: payload.notification.image,
+                };
+
+                new Notification(notificationTitle, notificationOptions);
+            });
+        } else {
+            console.warn('Service Workers are not supported in this browser.');
+        }
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

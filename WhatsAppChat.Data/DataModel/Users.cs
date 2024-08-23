@@ -18,6 +18,6 @@ namespace WhatsAppChat.Data.DataModel
         // Default CurrentTimeStamp
         public DateTime? CreatedAt { get; set; }
         public DateTime? LogoutTime { get; set; }
-
-	}
+        public string? FirebaseToken { get; set; }
+    }
 }
