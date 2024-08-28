@@ -102,9 +102,8 @@ namespace WhatsAppChat.Core.Repositories.Implementations
                 }
 				return true;
 			}
-			catch(Exception ex)
+			catch
 			{
-                Console.WriteLine(ex);
                 return false;
 			}
 		}

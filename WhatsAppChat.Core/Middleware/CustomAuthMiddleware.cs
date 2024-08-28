@@ -44,7 +44,7 @@ namespace WhatsAppChat.Core.Middleware
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = _configuration["Jwt:Issuer"],
                         ValidAudience = _configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!))
                     };
                     string? userName = null;
                     try
@@ -70,7 +70,7 @@ namespace WhatsAppChat.Core.Middleware
                                 .Where(x => x.Id == userId)
                                 .FirstOrDefault();
 
-                            token = Token.generateAccessToken(userData, _configuration, _context);
+                            token = Token.generateAccessToken(userData!, _configuration, _context);
                             string refreshToken = Token.generateRefreshToken();
 
                             var tokenData = new RefreshTokens

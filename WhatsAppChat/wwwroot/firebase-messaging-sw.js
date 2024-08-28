@@ -25,9 +25,7 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.onMessage((payload) => {
-    console.log("abcd", payload)
     console.log('Message received. ', payload);
-    // ...
 });
 
 

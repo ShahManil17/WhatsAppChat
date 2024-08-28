@@ -18,6 +18,17 @@ connection.start()
     .catch(console.error);
 
 var input = document.getElementById("messageBox");
+
+// Debounce will be used to delay the request by given time as an argument in miliseconds
+function debounce(callback, delay) {
+    let timer
+    return function () {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+            callback();
+        }, delay)
+    }
+}
 input.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
         event.preventDefault();
@@ -905,7 +916,6 @@ async function getValue() {
             </div>`;
         globalDay = -1;
     }
-    /*let fileCounter = 0;*/
     let htmlStr = ``;
     fileData.urls.urls.forEach((ele, index) => {
         htmlStr += `<div class="row ps-5 pe-5 pt-2 pb-2">
@@ -935,7 +945,6 @@ async function getValue() {
                 </span>
             </div>
         </div>`;
-        /*fileCounter++;*/
     });
     messages.innerHTML += htmlStr;
     messages.scrollTop = messages.scrollHeight;
@@ -957,7 +966,7 @@ function showSuggetion() {
     document.getElementById('searchSuggetion').style.visibility = 'visible';
 }
 
-async function search() {
+async function implementSearch() {
     const sender = ('; ' + document.cookie).split(`; userId=`).pop().split(';')[0];
     let suggetionEle = document.getElementById('searchSuggetion');
     let searchText = document.getElementById('searchResult').value.trim();
@@ -979,6 +988,9 @@ async function search() {
         document.getElementById('searchSuggetion').innerHTML = '';
     }
 }
+
+// While Searching the fetch will be executed only after 500 miliseconds to decrease the load on the server
+const search = debounce(implementSearch, 500);
 
 async function getSearchResult(id) {
     document.getElementById('searchSuggetion').innerHTML = '';

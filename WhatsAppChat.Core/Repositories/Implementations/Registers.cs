@@ -58,7 +58,7 @@ namespace WhatsAppChat.Core.Repositories.Implementations
                     IsDeleted = 0,
                     CreatedAt = DateTime.Now
                 };
-                Console.WriteLine("Success");
+                Console.WriteLine("Logged in Successfully");
                 _context.Users.Add(insertData);
                 await _context.SaveChangesAsync();
 
@@ -103,7 +103,7 @@ namespace WhatsAppChat.Core.Repositories.Implementations
                     return false;
                 }
 
-                Console.WriteLine("Success");
+                Console.WriteLine("Logged in Successfully");
 
                 return true;
             }

@@ -76,7 +76,6 @@
                     console.error('Service Worker registration or token retrieval failed:', error);
                 });
 
-            console.log("fdsfasdf");
             // Handle incoming messages when the app is in the foreground
             const messaging = firebase.messaging();
             messaging.onMessage((payload) => {

@@ -24,7 +24,7 @@ namespace WhatsAppChat.Core
 		}
 		public override Task OnConnectedAsync()
 		{
-            Console.WriteLine("Connection Id is : " + Context.ConnectionId);
+            Console.WriteLine("Connection Id : " + Context.ConnectionId + "Connected!");
 
 			#region For One To One Chat
 			// Update Connection Id
@@ -62,7 +62,7 @@ namespace WhatsAppChat.Core
 
 			var userInGroups = _context.Groups
 				.Join(_context.GroupHasMembers, t1 => t1.Id, t2 => t2.GroupId, (t1, t2) => new { t1, t2 })
-				.Where(t => t.t2.UserId == Convert.ToInt32(_contextAccessor.HttpContext.Request.Cookies["userId"])) 
+				.Where(t => t.t2.UserId == Convert.ToInt32(_contextAccessor.HttpContext!.Request.Cookies["userId"])) 
 				.Select(t => t.t1.GroupName)
 				.ToList();
 			if(userInGroups.Any())
@@ -82,7 +82,6 @@ namespace WhatsAppChat.Core
 			var user = _context.Users
 				.Where(x => x.Id == Convert.ToInt32(userId))
 				.FirstOrDefault();
-			Console.WriteLine("User Connection Id : "+user?.ConnectionId);
 			if(user!= null)
 			{
 				var communicationObj = new Communication()
@@ -110,6 +109,7 @@ namespace WhatsAppChat.Core
 		public async Task SendToGroup(string groupId, string message)
 		{
 			int userId = Convert.ToInt32(_contextAccessor.HttpContext?.Request.Cookies["userId"]);
+			
 			// Add Message To GroupMessages
 			Groups? groupData = _context.Groups
 				.Where(x => x.Id == groupId)
@@ -149,14 +149,14 @@ namespace WhatsAppChat.Core
 						_context.SaveChanges();
 					}
                 }
-                await Clients.Group(groupData.GroupName).SendAsync("SendToGroup", Convert.ToInt32(_contextAccessor.HttpContext?.Request.Cookies["userId"]), userName?.UserName, groupId, message);
+                await Clients.Group(groupData.GroupName!).SendAsync("SendToGroup", Convert.ToInt32(_contextAccessor.HttpContext?.Request.Cookies["userId"]), userName?.UserName, groupId, message);
                 foreach (var item in userDelatils)
                 {
                     if (item.t1.FirebaseToken != null && item.t1.Id != userId)
                     {
 						string? FinalMessage = userName?.UserName + " : " + message;
 
-                        await _notifications.PushNotification(item.t1.FirebaseToken, groupData.GroupName, FinalMessage);
+                        await _notifications.PushNotification(item.t1.FirebaseToken, groupData.GroupName!, FinalMessage);
 					}
                 }
             }
@@ -178,10 +178,10 @@ namespace WhatsAppChat.Core
 							.Where(x => x.Id == data.receiverId)
 							.FirstOrDefault();
 
-						if (urlModel != null && urlModel.urls.Any())
+						if (urlModel != null && urlModel.urls!.Any())
 						{
 							int counter = 0;
-							foreach (var item in urlModel.urls)
+							foreach (var item in urlModel.urls!)
 							{
 								Communication communication = new Communication()
 								{
@@ -201,11 +201,10 @@ namespace WhatsAppChat.Core
 						}
 						if (user?.ConnectionId != null)
 						{
-							Console.WriteLine(user.ConnectionId);
 							await Clients.Client(user.ConnectionId).SendAsync("ReceiveFile", data.senderId, _contextAccessor.HttpContext?.Request.Cookies["userId"], urlModel);
                             if (user.FirebaseToken != null)
                             {
-                                await _notifications.PushNotification(user.FirebaseToken, user.UserName, "🎞 File");
+                                await _notifications.PushNotification(user.FirebaseToken, user.UserName!, "🎞 File");
                             }
                         }
 					}
@@ -243,10 +242,10 @@ namespace WhatsAppChat.Core
 							.Join(_context.GroupHasMembers, t1 => t1.Id, t2 => t2.UserId, (t1, t2) => new { t1, t2 })
 							.Where(t => t.t2.GroupId == data.groupId)
 							.ToList();
-						if (urlModel != null && urlModel.urls.Any())
+						if (urlModel != null && urlModel.urls!.Any())
 						{
 							int counter = 0;
-							foreach (var item in urlModel.urls)
+							foreach (var item in urlModel.urls!)
 							{
 								Data.DataModel.GroupMessages groupMessage = new Data.DataModel.GroupMessages()
 								{
@@ -280,14 +279,14 @@ namespace WhatsAppChat.Core
 								}
 								counter++;
 							}
-							await Clients.Group(groupData.GroupName).SendAsync("ReceiveFromGroup", Convert.ToInt32(_contextAccessor.HttpContext?.Request.Cookies["userId"]), userName?.UserName, data.groupId, urlModel);
+							await Clients.Group(groupData.GroupName!).SendAsync("ReceiveFromGroup", Convert.ToInt32(_contextAccessor.HttpContext?.Request.Cookies["userId"]), userName?.UserName, data.groupId, urlModel);
                             foreach (var item in userDelatils)
                             {
                                 if (item.t1.FirebaseToken != null && item.t1.Id != userId)
                                 {
                                     string? FinalMessage = userName?.UserName + " : " + "🎞 File";
 
-                                    await _notifications.PushNotification(item.t1.FirebaseToken, groupData.GroupName, FinalMessage);
+                                    await _notifications.PushNotification(item.t1.FirebaseToken, groupData.GroupName!, FinalMessage);
                                 }
                             }
                         }
@@ -302,7 +301,7 @@ namespace WhatsAppChat.Core
 
 		public override Task OnDisconnectedAsync(Exception? exception)
 		{
-            Console.WriteLine("Connection Id is : " + Context.ConnectionId);
+            Console.WriteLine("Connection Id : " + Context.ConnectionId + "Disconnected!");
 
 			#region For One To One
 			Users? data = _context.Users
@@ -320,14 +319,14 @@ namespace WhatsAppChat.Core
 
 			var userInGroups = _context.Groups
 				.Join(_context.GroupHasMembers, t1 => t1.Id, t2 => t2.GroupId, (t1, t2) => new { t1, t2 })
-				.Where(t => t.t2.UserId == Convert.ToInt32(_contextAccessor.HttpContext.Request.Cookies["userId"]))
+				.Where(t => t.t2.UserId == Convert.ToInt32(_contextAccessor.HttpContext!.Request.Cookies["userId"]))
 				.Select(t => t.t1.GroupName)
 				.ToList();
 			if (userInGroups.Any())
 			{
 				foreach (var item in userInGroups)
 				{
-					Groups.RemoveFromGroupAsync(Context.ConnectionId, item);
+					Groups.RemoveFromGroupAsync(Context.ConnectionId, item!);
 				}
 			}
 

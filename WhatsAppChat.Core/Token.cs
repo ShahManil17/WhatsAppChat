@@ -1,13 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using WhatsAppChat.Data;
 using WhatsAppChat.Data.DataModel;
 
@@ -25,12 +21,11 @@ namespace WhatsAppChat.Core
 
         public static string generateAccessToken(Users userData, IConfiguration _configuration, ApplicationDbContext _context)
         {
-            Console.WriteLine(_configuration["Jwt:Key"]);
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var clm = new List<Claim>();
-            clm.Add(new Claim("UserName", userData.UserName));
+            clm.Add(new Claim("UserName", userData.UserName!));
 
             var Sectoken = new JwtSecurityToken(
               _configuration["Jwt:Issuer"],
