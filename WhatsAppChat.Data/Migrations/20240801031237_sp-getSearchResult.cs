@@ -10,7 +10,7 @@ namespace WhatsAppChat.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-			var sp = @"ALTER PROCEDURE [dbo].[getSearchResult] @name VARCHAR(MAX)
+			var sp = @"CREATE OR ALTER PROCEDURE [dbo].[getSearchResult] @name VARCHAR(MAX)
             AS
             BEGIN
 	            SELECT Id AS UserId, UserName AS Name, ProfileImage FROM Users WHERE UserName LIKE(@name);

@@ -21,6 +21,10 @@
             <section>
                 <form asp-action="Register" asp-controller="Home" enctype="multipart/form-data" method="post">
                     <h1 style="color:blueviolet" class="text-center mb-4">Register</h1>
+                    @if (ViewBag.ProfileError != null)
+                    {
+                        <p class="text-danger text-center">@ViewBag.ProfileError</p>
+                    }
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                     <div class="row">
                         <div class="col text-center">
